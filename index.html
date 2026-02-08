@@ -2,13 +2,25 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <!-- ✅ FIXED MOBILE ZOOM -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Our Forever Story ❤️</title>
+
+    <!-- ✅ Preload Hero Image (faster load) -->
+    <link rel="preload" as="image" href="images/pic1.jpg">
+
+    <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400&family=Dancing+Script:wght@700&family=Cormorant+Garamond:wght@300;400;600&display=swap" rel="stylesheet">
+
     <style>
+
         * {
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
             -webkit-tap-highlight-color: transparent;
-            -webkit-touch-callout: none;
         }
 
         :root {
@@ -19,43 +31,56 @@
             --glass: rgba(255, 255, 255, 0.8);
         }
 
-        html {
-            touch-action: manipulation;
+        html{
+            scroll-behavior:smooth;
         }
 
         body {
             font-family: 'Cormorant Garamond', serif;
             background: linear-gradient(135deg, #fffafa 0%, #ffe4e1 100%);
             color: #2d3436;
-            margin: 0;
-            padding: 0;
-            overflow-x: hidden;
-            scroll-behavior: smooth;
-            -webkit-text-size-adjust: 100%;
-            -moz-text-size-adjust: 100%;
-            -ms-text-size-adjust: 100%;
-            text-size-adjust: 100%;
+            overflow-x:hidden;
+        }
+
+        /* ✅ HERO HEADER (GitHub Safe Image Path) */
+        header {
+            height: 100vh;
+            min-height: 500px;
+            display:flex;
+            flex-direction:column;
+            justify-content:center;
+            align-items:center;
+            text-align:center;
+            padding:20px;
+            position:relative;
+            overflow:hidden;
+        }
+
+        /* Hero image using pseudo (more reliable) */
+        header::before{
+            content:"";
+            position:absolute;
+            inset:0;
+            background:
+                linear-gradient(rgba(255,255,255,0.45), rgba(255,255,255,0.45)),
+                url("images/pic1.jpg") center/cover no-repeat;
+            z-index:-1;
         }
 
         /* Floating Hearts Container */
         #heartContainer {
             position: fixed;
-            top: 0; 
-            left: 0; 
-            width: 100%; 
-            height: 100%;
+            inset:0;
             pointer-events: none;
             z-index: 1000;
             overflow: hidden;
         }
 
-        /* Header Pulsing Heart */
         .valentine-heart {
             color: var(--rose);
             font-size: 3rem;
             animation: pulse 1.5s infinite;
-            display: block;
-            margin-bottom: 10px;
+            margin-bottom:10px;
         }
 
         @keyframes pulse {
@@ -64,256 +89,138 @@
             100% { transform: scale(1); }
         }
 
-        /* Header Section */
-        header {
-            height: 100vh;
-            min-height: 500px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            background: linear-gradient(rgba(255,255,255,0.4), rgba(255,255,255,0.4)), 
-                        url('./images/pic1.jpg') no-repeat center center/cover;
-            padding: 20px;
-            position: relative;
-        }
-
-        /* Fallback if image doesn't load */
-        header::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, #ffe4e1 0%, #ffb6c1 100%);
-            z-index: -1;
-        }
-
         h1 {
             font-family: 'Playfair Display', serif;
             font-size: clamp(2.5rem, 8vw, 6.5rem);
             color: var(--deep-love);
-            margin: 0;
             text-shadow: 3px 3px 6px rgba(0,0,0,0.1);
-            padding: 0 10px;
         }
 
         .days-counter {
             font-family: 'Dancing Script', cursive;
             font-size: clamp(1.5rem, 5vw, 2.8rem);
             color: var(--gold);
-            margin-top: 15px;
+            margin-top:15px;
             background: var(--glass);
-            padding: 15px 30px;
-            border-radius: 50px;
-            box-shadow: 0 10px 25px rgba(255, 133, 162, 0.2);
-            border: 1px solid white;
+            padding:15px 30px;
+            border-radius:50px;
+            box-shadow: 0 10px 25px rgba(255,133,162,0.2);
         }
 
-        /* Music & Content Styles */
+        /* Music */
         .music-container {
-            max-width: 800px;
-            margin: 60px auto;
-            padding: 30px 20px;
+            max-width:800px;
+            margin:60px auto;
+            padding:30px 20px;
             background: var(--glass);
-            border-radius: 30px;
+            border-radius:30px;
             box-shadow: 0 15px 40px rgba(0,0,0,0.05);
-            border: 1px solid white;
             backdrop-filter: blur(10px);
-            position: relative;
-            z-index: 2;
         }
 
-        .music-container h2 {
-            font-size: clamp(1.8rem, 4vw, 2.5rem);
+        .playlist{
+            display:grid;
+            gap:15px;
         }
 
-        .playlist { 
-            display: grid; 
-            gap: 15px; 
+        .song-card{
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            padding:15px 20px;
+            background:white;
+            border-radius:15px;
+            transition:.3s;
+            cursor:pointer;
         }
 
-        .song-card {
-            display: flex; 
-            align-items: center; 
-            justify-content: space-between;
-            padding: 15px 20px; 
-            background: white; 
-            border-radius: 15px;
-            transition: 0.3s; 
-            cursor: pointer; 
-            border-left: 5px solid transparent;
-            touch-action: manipulation;
+        .song-card:hover{
+            transform:scale(1.02);
+            box-shadow:0 5px 15px var(--soft-glow);
         }
 
-        .song-card:active {
-            transform: scale(0.98);
+        /* Gallery */
+        .gallery-section{
+            max-width:1100px;
+            margin:80px auto;
+            padding:0 20px;
         }
 
-        .song-card:hover { 
-            transform: scale(1.02); 
-            border-left-color: var(--rose); 
-            box-shadow: 0 5px 15px var(--soft-glow); 
+        .gallery-grid{
+            display:grid;
+            grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+            gap:25px;
         }
 
-        .song-card.active { 
-            background: #fff0f3; 
-            border-left-color: var(--deep-love); 
+        .memory-card{
+            background:white;
+            padding:15px;
+            border-radius:15px;
+            box-shadow:0 10px 30px rgba(0,0,0,0.05);
+            transition:.4s;
         }
 
-        .song-info b {
-            font-size: clamp(1rem, 3vw, 1.2rem);
+        .memory-card:hover{
+            transform:translateY(-6px);
         }
 
-        .song-info p {
-            font-size: clamp(0.85rem, 2.5vw, 1rem);
-            margin: 5px 0 0 0;
-            color: #666;
+        .memory-card img{
+            width:100%;
+            height:350px;
+            object-fit:cover;
+            border-radius:10px;
         }
 
-        .play-icon { 
-            font-size: 1.5rem; 
-            color: var(--rose); 
-            flex-shrink: 0;
-            margin-left: 10px;
+        .memory-caption{
+            font-family:'Dancing Script',cursive;
+            font-size: clamp(1.3rem,4vw,1.8rem);
+            text-align:center;
+            margin-top:15px;
+            color:var(--deep-love);
         }
 
-        /* Gallery Styles */
-        .gallery-section { 
-            max-width: 1100px; 
-            margin: 80px auto; 
-            padding: 0 20px; 
-            position: relative; 
-            z-index: 2; 
+        /* Promise */
+        .promise-section{
+            text-align:center;
+            padding:80px 20px;
+            background: rgba(255,240,243,0.8);
         }
 
-        .gallery-grid { 
-            display: grid; 
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
-            gap: 25px; 
+        .promise-text{
+            font-size: clamp(1.1rem,3vw,2.2rem);
+            max-width:900px;
+            margin:auto;
+            line-height:1.6;
         }
 
-        .memory-card { 
-            background: white; 
-            padding: 15px; 
-            border-radius: 15px; 
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05); 
-            transition: 0.5s ease; 
-            border: 1px solid #fce4ec; 
+        .highlight{
+            color:var(--deep-love);
+            font-weight:600;
         }
 
-        .memory-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
-        }
+        /* ❤️ MOBILE OPTIMIZATION */
+        @media(max-width:768px){
 
-        .memory-card img { 
-            width: 100%; 
-            height: 350px; 
-            object-fit: cover; 
-            border-radius: 10px; 
-            display: block;
-        }
-
-        .memory-caption { 
-            font-family: 'Dancing Script', cursive; 
-            font-size: clamp(1.3rem, 4vw, 1.8rem); 
-            text-align: center; 
-            margin-top: 15px; 
-            color: var(--deep-love); 
-        }
-
-        /* Promise Section */
-        .promise-section { 
-            text-align: center; 
-            padding: 80px 20px; 
-            background: rgba(255, 240, 243, 0.8); 
-            position: relative; 
-            z-index: 2; 
-        }
-
-        .promise-text { 
-            font-size: clamp(1.1rem, 3vw, 2.2rem); 
-            max-width: 900px; 
-            margin: 0 auto; 
-            line-height: 1.6; 
-            font-weight: 300; 
-        }
-
-        .highlight { 
-            color: var(--deep-love); 
-            font-weight: 600; 
-        }
-
-        .reveal { 
-            opacity: 0; 
-            transform: translateY(30px); 
-            transition: 1s ease-out; 
-        }
-
-        .reveal.active { 
-            opacity: 1; 
-            transform: translateY(0); 
-        }
-
-        /* Floating Heart Individual Style */
-        .float-heart {
-            position: fixed;
-            pointer-events: none;
-            opacity: 0.8;
-            z-index: 9999;
-        }
-
-        /* Mobile specific adjustments */
-        @media (max-width: 768px) {
-            .valentine-heart {
-                font-size: 2.5rem;
+            header{
+                min-height:420px;
             }
 
-            .days-counter {
-                padding: 12px 25px;
+            .gallery-grid{
+                grid-template-columns:1fr;
             }
 
-            .music-container {
-                margin: 40px 15px;
-                padding: 25px 15px;
+            .memory-card img{
+                height:280px;
             }
 
-            .gallery-section {
-                margin: 60px auto;
-            }
-
-            .gallery-grid {
-                grid-template-columns: 1fr;
-                gap: 20px;
-            }
-
-            .memory-card img {
-                height: 300px;
-            }
-
-            .promise-section {
-                padding: 60px 15px;
-            }
-
-            .song-card {
-                padding: 12px 15px;
+            .music-container{
+                margin:40px 15px;
             }
         }
 
-        @media (max-width: 480px) {
-            header {
-                min-height: 400px;
-            }
-
-            .memory-card img {
-                height: 250px;
-            }
-        }
     </style>
 </head>
+
 <body onclick="createHeartBurst(event)">
 
     <div id="heartContainer"></div>
@@ -370,27 +277,27 @@
     <section class="gallery-section">
         <div class="gallery-grid">
             <div class="memory-card reveal">
-                <img src="./images/pic1.jpeg" alt="Memory 1">
+                <img src="./Images/pic1.jpeg" alt="Memory 1">
                 <div class="memory-caption">My Sunshine ☀️</div>
             </div>
             <div class="memory-card reveal">
-                <img src="./images/pic2.jpeg" alt="Memory 2">
+                <img src="./Images/pic2.jpeg" alt="Memory 2">
                 <div class="memory-caption">That Beautiful Smile ✨</div>
             </div>
             <div class="memory-card reveal">
-                <img src="./images/pic3.jpeg" alt="Memory 3">
+                <img src="./Images/pic3.jpeg" alt="Memory 3">
                 <div class="memory-caption">My North Star ❤️</div>
             </div>
             <div class="memory-card reveal">
-                <img src="./images/pic4.jpeg" alt="Memory 4">
+                <img src="./Images/pic4.jpeg" alt="Memory 4">
                 <div class="memory-caption">My Whole World 💍</div>
             </div>
             <div class="memory-card reveal">
-                <img src="./images/pic5.jpeg" alt="Memory 5">
+                <img src="./Images/pic5.jpeg" alt="Memory 5">
                 <div class="memory-caption">My Constant Craving 🍭✨</div>
             </div>
             <div class="memory-card reveal">
-                <img src="./images/pic6.jpeg" alt="Memory 6">
+                <img src="./Images/pic6.jpeg" alt="Memory 6">
                 <div class="memory-caption">My Favorite Human 🌎💖</div>
             </div>
         </div>
