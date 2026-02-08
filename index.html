@@ -2,10 +2,15 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Our Forever Story ❤️</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400&family=Dancing+Script:wght@700&family=Cormorant+Garamond:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
+        * {
+            -webkit-tap-highlight-color: transparent;
+            -webkit-touch-callout: none;
+        }
+
         :root {
             --rose: #ff85a2;
             --deep-love: #b33939;
@@ -14,21 +19,34 @@
             --glass: rgba(255, 255, 255, 0.8);
         }
 
+        html {
+            touch-action: manipulation;
+        }
+
         body {
             font-family: 'Cormorant Garamond', serif;
             background: linear-gradient(135deg, #fffafa 0%, #ffe4e1 100%);
             color: #2d3436;
             margin: 0;
+            padding: 0;
             overflow-x: hidden;
             scroll-behavior: smooth;
+            -webkit-text-size-adjust: 100%;
+            -moz-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
+            text-size-adjust: 100%;
         }
 
         /* Floating Hearts Container */
         #heartContainer {
             position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 100%;
             pointer-events: none;
-            z-index: 1000; /* High z-index to float over everything */
+            z-index: 1000;
+            overflow: hidden;
         }
 
         /* Header Pulsing Heart */
@@ -49,41 +67,56 @@
         /* Header Section */
         header {
             height: 100vh;
+            min-height: 500px;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             text-align: center;
             background: linear-gradient(rgba(255,255,255,0.4), rgba(255,255,255,0.4)), 
-                        url('Images/pic1.jpg') no-repeat center center/cover;
+                        url('./images/pic1.jpg') no-repeat center center/cover;
             padding: 20px;
+            position: relative;
+        }
+
+        /* Fallback if image doesn't load */
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, #ffe4e1 0%, #ffb6c1 100%);
+            z-index: -1;
         }
 
         h1 {
             font-family: 'Playfair Display', serif;
-            font-size: clamp(3.5rem, 10vw, 6.5rem);
+            font-size: clamp(2.5rem, 8vw, 6.5rem);
             color: var(--deep-love);
             margin: 0;
             text-shadow: 3px 3px 6px rgba(0,0,0,0.1);
+            padding: 0 10px;
         }
 
         .days-counter {
             font-family: 'Dancing Script', cursive;
-            font-size: 2.8rem;
+            font-size: clamp(1.5rem, 5vw, 2.8rem);
             color: var(--gold);
             margin-top: 15px;
             background: var(--glass);
-            padding: 15px 40px;
+            padding: 15px 30px;
             border-radius: 50px;
             box-shadow: 0 10px 25px rgba(255, 133, 162, 0.2);
             border: 1px solid white;
         }
 
-        /* Music & Content Styles from your previous code */
+        /* Music & Content Styles */
         .music-container {
             max-width: 800px;
-            margin: 80px auto;
-            padding: 40px;
+            margin: 60px auto;
+            padding: 30px 20px;
             background: var(--glass);
             border-radius: 30px;
             box-shadow: 0 15px 40px rgba(0,0,0,0.05);
@@ -93,30 +126,137 @@
             z-index: 2;
         }
 
-        .playlist { display: grid; gap: 15px; }
-        .song-card {
-            display: flex; align-items: center; justify-content: space-between;
-            padding: 15px 25px; background: white; border-radius: 15px;
-            transition: 0.3s; cursor: pointer; border-left: 5px solid transparent;
+        .music-container h2 {
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
         }
-        .song-card:hover { transform: scale(1.02); border-left-color: var(--rose); box-shadow: 0 5px 15px var(--soft-glow); }
-        .song-card.active { background: #fff0f3; border-left-color: var(--deep-love); }
-        .play-icon { font-size: 1.5rem; color: var(--rose); }
+
+        .playlist { 
+            display: grid; 
+            gap: 15px; 
+        }
+
+        .song-card {
+            display: flex; 
+            align-items: center; 
+            justify-content: space-between;
+            padding: 15px 20px; 
+            background: white; 
+            border-radius: 15px;
+            transition: 0.3s; 
+            cursor: pointer; 
+            border-left: 5px solid transparent;
+            touch-action: manipulation;
+        }
+
+        .song-card:active {
+            transform: scale(0.98);
+        }
+
+        .song-card:hover { 
+            transform: scale(1.02); 
+            border-left-color: var(--rose); 
+            box-shadow: 0 5px 15px var(--soft-glow); 
+        }
+
+        .song-card.active { 
+            background: #fff0f3; 
+            border-left-color: var(--deep-love); 
+        }
+
+        .song-info b {
+            font-size: clamp(1rem, 3vw, 1.2rem);
+        }
+
+        .song-info p {
+            font-size: clamp(0.85rem, 2.5vw, 1rem);
+            margin: 5px 0 0 0;
+            color: #666;
+        }
+
+        .play-icon { 
+            font-size: 1.5rem; 
+            color: var(--rose); 
+            flex-shrink: 0;
+            margin-left: 10px;
+        }
 
         /* Gallery Styles */
-        .gallery-section { max-width: 1100px; margin: 100px auto; padding: 0 20px; position: relative; z-index: 2; }
-        .gallery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; }
-        .memory-card { background: white; padding: 15px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); transition: 0.5s ease; border: 1px solid #fce4ec; }
-        .memory-card img { width: 100%; height: 380px; object-fit: cover; border-radius: 10px; }
-        .memory-caption { font-family: 'Dancing Script', cursive; font-size: 1.8rem; text-align: center; margin-top: 15px; color: var(--deep-love); }
+        .gallery-section { 
+            max-width: 1100px; 
+            margin: 80px auto; 
+            padding: 0 20px; 
+            position: relative; 
+            z-index: 2; 
+        }
+
+        .gallery-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
+            gap: 25px; 
+        }
+
+        .memory-card { 
+            background: white; 
+            padding: 15px; 
+            border-radius: 15px; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05); 
+            transition: 0.5s ease; 
+            border: 1px solid #fce4ec; 
+        }
+
+        .memory-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+        }
+
+        .memory-card img { 
+            width: 100%; 
+            height: 350px; 
+            object-fit: cover; 
+            border-radius: 10px; 
+            display: block;
+        }
+
+        .memory-caption { 
+            font-family: 'Dancing Script', cursive; 
+            font-size: clamp(1.3rem, 4vw, 1.8rem); 
+            text-align: center; 
+            margin-top: 15px; 
+            color: var(--deep-love); 
+        }
 
         /* Promise Section */
-        .promise-section { text-align: center; padding: 100px 20px; background: rgba(255, 240, 243, 0.8); position: relative; z-index: 2; }
-        .promise-text { font-size: 2.2rem; max-width: 900px; margin: 0 auto; line-height: 1.5; font-weight: 300; }
-        .highlight { color: var(--deep-love); font-weight: 600; }
+        .promise-section { 
+            text-align: center; 
+            padding: 80px 20px; 
+            background: rgba(255, 240, 243, 0.8); 
+            position: relative; 
+            z-index: 2; 
+        }
 
-        .reveal { opacity: 0; transform: translateY(30px); transition: 1s ease-out; }
-        .reveal.active { opacity: 1; transform: translateY(0); }
+        .promise-text { 
+            font-size: clamp(1.1rem, 3vw, 2.2rem); 
+            max-width: 900px; 
+            margin: 0 auto; 
+            line-height: 1.6; 
+            font-weight: 300; 
+        }
+
+        .highlight { 
+            color: var(--deep-love); 
+            font-weight: 600; 
+        }
+
+        .reveal { 
+            opacity: 0; 
+            transform: translateY(30px); 
+            transition: 1s ease-out; 
+        }
+
+        .reveal.active { 
+            opacity: 1; 
+            transform: translateY(0); 
+        }
 
         /* Floating Heart Individual Style */
         .float-heart {
@@ -126,6 +266,52 @@
             z-index: 9999;
         }
 
+        /* Mobile specific adjustments */
+        @media (max-width: 768px) {
+            .valentine-heart {
+                font-size: 2.5rem;
+            }
+
+            .days-counter {
+                padding: 12px 25px;
+            }
+
+            .music-container {
+                margin: 40px 15px;
+                padding: 25px 15px;
+            }
+
+            .gallery-section {
+                margin: 60px auto;
+            }
+
+            .gallery-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .memory-card img {
+                height: 300px;
+            }
+
+            .promise-section {
+                padding: 60px 15px;
+            }
+
+            .song-card {
+                padding: 12px 15px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            header {
+                min-height: 400px;
+            }
+
+            .memory-card img {
+                height: 250px;
+            }
+        }
     </style>
 </head>
 <body onclick="createHeartBurst(event)">
@@ -142,39 +328,39 @@
     <section class="music-container reveal">
         <h2 style="text-align: center; font-family: 'Playfair Display'; color: var(--deep-love);">🎵 Our Valentine Playlist</h2>
         <div class="playlist">
-            <div class="song-card" onclick="playSong('Songs/Pehla.mp3', this)">
+            <div class="song-card" onclick="playSong('songs/Pehla.mp3', this)">
                 <div class="song-info"><b>Pehla Pehla Pyaar</b><p>S.P. Balasubrahmanyam</p></div>
                 <div class="play-icon">▶</div>
             </div>
-            <div class="song-card" onclick="playSong('Songs/MainAgar.mp3', this)">
+            <div class="song-card" onclick="playSong('songs/MainAgar.mp3', this)">
                 <div class="song-info"><b>Main Agar Kahoon</b><p>Om Shanti Om</p></div>
                 <div class="play-icon">▶</div>
             </div>
-            <div class="song-card" onclick="playSong('Songs/TereBina.mp3', this)">
+            <div class="song-card" onclick="playSong('songs/TereBina.mp3', this)">
                 <div class="song-info"><b>Tere Bina</b><p>A.R. Rahman</p></div>
                 <div class="play-icon">▶</div>
             </div>
-            <div class="song-card" onclick="playSong('Songs/TumHo.mp3', this)">
+            <div class="song-card" onclick="playSong('songs/TumHo.mp3', this)">
                 <div class="song-info"><b>Tum Ho</b><p>Mohit Chauhan</p></div>
                 <div class="play-icon">▶</div>
             </div>
-            <div class="song-card" onclick="playSong('Songs/Ambarsariya.mp3', this)">
+            <div class="song-card" onclick="playSong('songs/Ambarsariya.mp3', this)">
                 <div class="song-info"><b>Ambarsariya</b><p>Sona Mohapatra</p></div>
                 <div class="play-icon">▶</div>
             </div>
-            <div class="song-card" onclick="playSong('Songs/Guzarish.mp3', this)">
+            <div class="song-card" onclick="playSong('songs/Guzarish.mp3', this)">
                 <div class="song-info"><b>Guzarish</b><p>Javed Ali</p></div>
                 <div class="play-icon">▶</div>
             </div>
-            <div class="song-card" onclick="playSong('Songs/TuJaaneNa.mp3', this)">
+            <div class="song-card" onclick="playSong('songs/TuJaaneNa.mp3', this)">
                 <div class="song-info"><b>Tu Jaane Na</b><p>Atif Aslam</p></div>
                 <div class="play-icon">▶</div>
             </div>
-            <div class="song-card" onclick="playSong('Songs/Chand.mp3', this)">
+            <div class="song-card" onclick="playSong('songs/Chand.mp3', this)">
                 <div class="song-info"><b>Chand Sifarish</b><p>Shaan</p></div>
                 <div class="play-icon">▶</div>
             </div>
-            <div class="song-card" onclick="playSong('Songs/Raanjhanaa.mp3', this)">
+            <div class="song-card" onclick="playSong('songs/Raanjhanaa.mp3', this)">
                 <div class="song-info"><b>Raanjhanaa</b><p>A.R. Rahman</p></div>
                 <div class="play-icon">▶</div>
             </div>
@@ -184,47 +370,47 @@
     <section class="gallery-section">
         <div class="gallery-grid">
             <div class="memory-card reveal">
-                <img src="Images/pic1.jpeg" alt="Memory 1">
+                <img src="./images/pic1.jpeg" alt="Memory 1">
                 <div class="memory-caption">My Sunshine ☀️</div>
             </div>
             <div class="memory-card reveal">
-                <img src="Images/pic2.jpeg" alt="Memory 2">
+                <img src="./images/pic2.jpeg" alt="Memory 2">
                 <div class="memory-caption">That Beautiful Smile ✨</div>
             </div>
             <div class="memory-card reveal">
-                <img src="Images/pic3.jpeg" alt="Memory 3">
+                <img src="./images/pic3.jpeg" alt="Memory 3">
                 <div class="memory-caption">My North Star ❤️</div>
             </div>
             <div class="memory-card reveal">
-                <img src="Images/pic4.jpeg" alt="Memory 4">
+                <img src="./images/pic4.jpeg" alt="Memory 4">
                 <div class="memory-caption">My Whole World 💍</div>
             </div>
-           <div class="memory-card reveal">
-    <img src="Images/pic5.jpeg" alt="Memory 5">
-    <div class="memory-caption">My Constant Craving 🍭✨</div>
-</div>
-
-<div class="memory-card reveal">
-    <img src="Images/pic6.jpeg" alt="Memory 6">
-    <div class="memory-caption">My Favorite Human 🌎💖</div>
-</div>
+            <div class="memory-card reveal">
+                <img src="./images/pic5.jpeg" alt="Memory 5">
+                <div class="memory-caption">My Constant Craving 🍭✨</div>
+            </div>
+            <div class="memory-card reveal">
+                <img src="./images/pic6.jpeg" alt="Memory 6">
+                <div class="memory-caption">My Favorite Human 🌎💖</div>
+            </div>
         </div>
     </section>
 
-<div class="promise-section reveal">
+    <div class="promise-section reveal">
         <div class="valentine-heart" style="font-size: 4rem;">🌹</div>
         <p class="promise-text">
             "My Dearest Bhumiiiii, as I look back on these <span class="highlight">1146 days</span>, I realize that every second spent with you has been a gift I never knew I deserved. You aren't just a part of my life; you are the very soul of it. From the way you smile to the quiet moments we share, you have turned my world into a beautiful masterpiece of love and laughter."
             <br><br>
-            "On this Valentine’s Day, I want to make a promise that transcends time. <span class="highlight">I want to spend my entire life by your side</span>—to be the one who wakes up next to you every morning, the one who supports your wildest dreams, and the one who holds your hand through every season life brings our way. I am, and will be, <span class="highlight">forever grateful</span> for the day you walked into my life and chose to stay."
+            "On this Valentine's Day, I want to make a promise that transcends time. <span class="highlight">I want to spend my entire life by your side</span>—to be the one who wakes up next to you every morning, the one who supports your wildest dreams, and the one who holds your hand through every season life brings our way. I am, and will be, <span class="highlight">forever grateful</span> for the day you walked into my life and chose to stay."
             <br><br>
             "I don't just want a 'happily ever after' with you... I want the 'everything in between.' I want the mundane Tuesdays, the late-night talks, and the decades of memories we have yet to create. You are my home, my greatest adventure, and my favorite 'always.' <br>
-            <span style="font-family: 'Dancing Script'; font-size: 3rem; display: block; margin-top: 30px; color: var(--rose); text-shadow: 0 0 10px rgba(255,133,162,0.5);">Yours Forever & Always ❤️</span>
+            <span style="font-family: 'Dancing Script'; font-size: clamp(2rem, 5vw, 3rem); display: block; margin-top: 30px; color: var(--rose); text-shadow: 0 0 10px rgba(255,133,162,0.5);">Yours Forever & Always ❤️</span>
         </p>
     </div>
 
     <script>
         const audio = document.getElementById('mainAudio');
+        
         function playSong(path, element) {
             const cards = document.querySelectorAll('.song-card');
             cards.forEach(c => {
@@ -236,7 +422,10 @@
                 audio.pause();
             } else {
                 audio.src = path;
-                audio.play();
+                audio.play().catch(err => {
+                    console.log('Audio play failed:', err);
+                    alert('Could not play audio. Please check if the file exists.');
+                });
                 element.classList.add('active');
                 element.querySelector('.play-icon').innerHTML = '⏸';
             }
@@ -250,7 +439,7 @@
             });
         });
 
-        // 1. Automatic Background Floating Hearts
+        // Automatic Background Floating Hearts
         function spawnHeart() {
             const heart = document.createElement('div');
             heart.classList.add('float-heart');
@@ -269,10 +458,18 @@
 
             setTimeout(() => heart.remove(), 7000);
         }
+        
         setInterval(spawnHeart, 400);
 
-        // 2. Click-to-Burst Heart Effect
+        // Click-to-Burst Heart Effect
         function createHeartBurst(e) {
+            // Prevent too many bursts on mobile
+            if (window.burstTimeout) return;
+            
+            window.burstTimeout = setTimeout(() => {
+                window.burstTimeout = null;
+            }, 200);
+
             for (let i = 0; i < 8; i++) {
                 const burst = document.createElement('div');
                 burst.classList.add('float-heart');
@@ -295,6 +492,16 @@
                 setTimeout(() => burst.remove(), 1000);
             }
         }
+
+        // Prevent double-tap zoom on iOS
+        let lastTouchEnd = 0;
+        document.addEventListener('touchend', function (event) {
+            const now = (new Date()).getTime();
+            if (now - lastTouchEnd <= 300) {
+                event.preventDefault();
+            }
+            lastTouchEnd = now;
+        }, false);
     </script>
 </body>
 </html>
