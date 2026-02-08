@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+<title>Our Forever Story ❤️</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400&family=Dancing+Script:wght@700&family=Cormorant+Garamond:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+:root {
+    --rose: #ff85a2;
+    --deep-love: #b33939;
+    --gold: #d4af37;
+    --soft-glow: rgba(255,133,162,0.4);
+    --glass: rgba(255,255,255,0.85);
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    touch-action: manipulation;
+}
+
+body {
+    font-family: 'Cormorant Garamond', serif;
+    background: linear-gradient(135deg, #fffafa, #ffe4e1);
+    color: #2d3436;
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+}
+
+/* Floating Hearts */
+#heartContainer {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 9999;
+}
+
+.float-heart {
+    position: fixed;
+    pointer-events: none;
+    opacity: 0.8;
+}
+
+/* Header */
+header {
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background:
+      linear-gradient(rgba(255,255,255,0.4), rgba(255,255,255,0.4)),
+      url('images/pic1.jpeg') center/cover no-repeat;
+    padding: 20px;
+}
+
+.valentine-heart {
+    font-size: 3rem;
+    animation: pulse 1.5s infinite;
+    color: var(--rose);
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}
+
+h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3rem, 9vw, 6rem);
+    color: var(--deep-love);
+    margin: 10px 0;
+}
+
+.days-counter {
+    font-family: 'Dancing Script', cursive;
+    font-size: 2.2rem;
+    color: var(--gold);
+    background: var(--glass);
+    padding: 15px 30px;
+    border-radius: 50px;
+    box-shadow: 0 10px 25px var(--soft-glow);
+}
+
+/* Music */
+.music-container {
+    max-width: 800px;
+    margin: 80px auto;
+    padding: 40px;
+    background: var(--glass);
+    border-radius: 30px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.05);
+}
+
+.playlist {
+    display: grid;
+    gap: 15px;
+}
+
+.song-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    background: white;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: 0.3s;
+    border-left: 5px solid transparent;
+}
+
+.song-card:hover {
+    transform: scale(1.02);
+    border-left-color: var(--rose);
+}
+
+.song-card.active {
+    background: #fff0f3;
+    border-left-color: var(--deep-love);
+}
+
+.play-icon {
+    font-size: 1.4rem;
+    color: var(--rose);
+}
+
+/* Gallery */
+.gallery-section {
+    max-width: 1100px;
+    margin: 100px auto;
+    padding: 0 20px;
+}
+
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 30px;
+}
+
+.memory-card {
+    background: white;
+    padding: 15px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+}
+
+.memory-card img {
+    width: 100%;
+    height: auto;
+    max-height: 380px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.memory-caption {
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.7rem;
+    text-align: center;
+    margin-top: 10px;
+    color: var(--deep-love);
+}
+
+/* Promise */
+.promise-section {
+    padding: 100px 20px;
+    background: rgba(255,240,243,0.85);
+    text-align: center;
+}
+
+.promise-text {
+    font-size: 2rem;
+    max-width: 900px;
+    margin: auto;
+    line-height: 1.5;
+}
+
+.highlight {
+    color: var(--deep-love);
+    font-weight: 600;
+}
+
+/* Reveal */
+.reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: 1s ease;
+}
+
+.reveal.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+</style>
+</head>
+
+<body onclick="createHeartBurst(event)">
+
+<div id="heartContainer"></div>
+<audio id="mainAudio"></audio>
+
+<header>
+    <span class="valentine-heart">❤️</span>
+    <h1 class="reveal active">Happy Valentine's Day</h1>
+    <div class="days-counter reveal active">1146 Days of Loving You ❤️</div>
+</header>
+
+<section class="music-container reveal">
+<h2 style="text-align:center;color:var(--deep-love)">🎵 Our Valentine Playlist</h2>
+
+<div class="playlist">
+<div class="song-card" onclick="playSong('songs/pehla.mp3',this)">
+<b>Pehla Pehla Pyaar</b><span class="play-icon">▶</span>
+</div>
+<div class="song-card" onclick="playSong('songs/mainagar.mp3',this)">
+<b>Main Agar Kahoon</b><span class="play-icon">▶</span>
+</div>
+<div class="song-card" onclick="playSong('songs/terebina.mp3',this)">
+<b>Tere Bina</b><span class="play-icon">▶</span>
+</div>
+</div>
+</section>
+
+<section class="gallery-section">
+<div class="gallery-grid">
+<div class="memory-card reveal"><img src="images/pic1.jpeg"><div class="memory-caption">My Sunshine ☀️</div></div>
+<div class="memory-card reveal"><img src="images/pic2.jpeg"><div class="memory-caption">That Smile ✨</div></div>
+<div class="memory-card reveal"><img src="images/pic3.jpeg"><div class="memory-caption">My North Star ❤️</div></div>
+<div class="memory-card reveal"><img src="images/pic4.jpeg"><div class="memory-caption">My World 💍</div></div>
+</div>
+</section>
+
+<div class="promise-section reveal">
+<p class="promise-text">
+My Dearest <span class="highlight">Bhumiiiii</span>, every day with you is magic.
+<br><br>
+<span class="highlight">Forever & Always ❤️</span>
+</p>
+</div>
+
+<script>
+const audio = document.getElementById('mainAudio');
+
+function playSong(path, el) {
+    document.querySelectorAll('.song-card').forEach(c=>{
+        c.classList.remove('active');
+        c.querySelector('.play-icon').textContent='▶';
+    });
+
+    if(audio.src.includes(path) && !audio.paused){
+        audio.pause();
+    } else {
+        audio.src = path;
+        audio.play();
+        el.classList.add('active');
+        el.querySelector('.play-icon').textContent='⏸';
+    }
+}
+
+window.addEventListener("scroll",()=>{
+document.querySelectorAll(".reveal").forEach(el=>{
+if(el.getBoundingClientRect().top < window.innerHeight - 100){
+el.classList.add("active");
+}
+});
+});
+
+/* Floating hearts */
+function spawnHeart(){
+const h=document.createElement("div");
+h.className="float-heart";
+h.innerHTML=["❤️","💖","💕","💝","🌹"][Math.random()*5|0];
+h.style.left=Math.random()*100+"vw";
+h.style.top="100vh";
+h.style.fontSize=(Math.random()*20+15)+"px";
+h.style.transition="transform 6s linear,opacity 2s";
+heartContainer.appendChild(h);
+setTimeout(()=>{
+h.style.transform=`translateY(-120vh) rotate(${Math.random()*360}deg)`;
+h.style.opacity=0;
+},100);
+setTimeout(()=>h.remove(),7000);
+}
+setInterval(spawnHeart,500);
+
+function createHeartBurst(e){
+for(let i=0;i<8;i++){
+const b=document.createElement("div");
+b.className="float-heart";
+b.innerHTML="❤️";
+b.style.left=e.clientX+"px";
+b.style.top=e.clientY+"px";
+b.style.transition="1s";
+document.body.appendChild(b);
+setTimeout(()=>{
+b.style.transform=`translate(${(Math.random()-0.5)*200}px,${(Math.random()-0.5)*200}px) scale(0)`;
+b.style.opacity=0;
+},50);
+setTimeout(()=>b.remove(),1000);
+}
+}
+</script>
+</body>
+</html>

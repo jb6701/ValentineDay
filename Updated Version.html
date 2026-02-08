@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Love Story ❤️</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --rose-pink: #ff6b9d;
+            --deep-rose: #c44569;
+            --soft-pink: #ffeef8;
+            --cream: #fff5f7;
+            --gold: #d4af37;
+            --dark: #2d1b2e;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cormorant Garamond', serif;
+            background: linear-gradient(135deg, var(--soft-pink) 0%, var(--cream) 50%, #ffe4f0 100%);
+            color: var(--dark);
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Floating hearts animation */
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+        }
+
+        .heart-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .heart {
+            position: absolute;
+            font-size: 20px;
+            animation: float linear infinite;
+            opacity: 0;
+        }
+
+        .container {
+            position: relative;
+            z-index: 2;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* Header */
+        header {
+            text-align: center;
+            padding: 60px 20px;
+            animation: fadeInDown 1s ease-out;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 5em;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--rose-pink), var(--deep-rose), var(--gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .subtitle {
+            font-size: 1.8em;
+            color: var(--deep-rose);
+            font-style: italic;
+            margin-bottom: 10px;
+        }
+
+        .distance-counter {
+            font-size: 1.2em;
+            color: var(--dark);
+            margin-top: 20px;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 15px;
+            display: inline-block;
+            backdrop-filter: blur(10px);
+        }
+
+        /* Music Player Section */
+        .music-section {
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 30px;
+            padding: 40px;
+            margin: 40px 0;
+            box-shadow: 0 20px 60px rgba(196, 69, 105, 0.2);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 107, 157, 0.3);
+            animation: slideInLeft 1s ease-out 0.3s both;
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .music-section h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5em;
+            color: var(--deep-rose);
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .playlist {
+            display: grid;
+            gap: 15px;
+        }
+
+        .song-item {
+            background: linear-gradient(135deg, rgba(255, 107, 157, 0.1), rgba(255, 255, 255, 0.5));
+            padding: 20px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            cursor: pointer;
+        }
+
+        .song-item:hover {
+            transform: translateX(10px);
+            border-color: var(--rose-pink);
+            box-shadow: 0 5px 20px rgba(255, 107, 157, 0.3);
+        }
+
+        .song-item.playing {
+            background: linear-gradient(135deg, var(--rose-pink), var(--deep-rose));
+            color: white;
+            border-color: var(--gold);
+        }
+
+        .song-info {
+            flex-grow: 1;
+        }
+
+        .song-title {
+            font-size: 1.3em;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .song-artist {
+            font-size: 1em;
+            opacity: 0.8;
+        }
+
+        .play-btn {
+            background: var(--rose-pink);
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2em;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .play-btn:hover {
+            background: var(--deep-rose);
+            transform: scale(1.1);
+        }
+
+        .song-item.playing .play-btn {
+            background: var(--gold);
+        }
+
+        /* Photo Gallery */
+        .gallery-section {
+            margin: 40px 0;
+            animation: slideInRight 1s ease-out 0.6s both;
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .gallery-section h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5em;
+            color: var(--deep-rose);
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .upload-area {
+            background: rgba(255, 255, 255, 0.8);
+            border: 3px dashed var(--rose-pink);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            margin-bottom: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .upload-area:hover {
+            border-color: var(--deep-rose);
+            background: rgba(255, 107, 157, 0.1);
+            transform: scale(1.02);
+        }
+
+        .upload-area input {
+            display: none;
+        }
+
+        .upload-text {
+            font-size: 1.5em;
+            color: var(--deep-rose);
+            margin-bottom: 10px;
+        }
+
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .photo-card {
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            animation: fadeInUp 0.5s ease-out both;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .photo-card:hover {
+            transform: translateY(-10px) rotate(2deg);
+            box-shadow: 0 20px 50px rgba(255, 107, 157, 0.3);
+        }
+
+        .photo-card img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .photo-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(255, 107, 157, 0.3), rgba(196, 69, 105, 0.3));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .photo-card:hover::before {
+            opacity: 1;
+        }
+
+        .delete-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            border-radius: 50%;
+            width: 35px;
+            height: 35px;
+            cursor: pointer;
+            opacity: 0;
+            transition: all 0.3s ease;
+            font-size: 1.2em;
+            color: var(--deep-rose);
+        }
+
+        .photo-card:hover .delete-btn {
+            opacity: 1;
+        }
+
+        .delete-btn:hover {
+            background: var(--rose-pink);
+            color: white;
+            transform: scale(1.1);
+        }
+
+        /* Love Note Section */
+        .love-note {
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 30px;
+            padding: 40px;
+            margin: 40px 0;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(196, 69, 105, 0.2);
+            backdrop-filter: blur(10px);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+        }
+
+        .love-note p {
+            font-size: 1.8em;
+            color: var(--deep-rose);
+            font-style: italic;
+            line-height: 1.6;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 3em;
+            }
+
+            .music-section, .gallery-section {
+                padding: 20px;
+            }
+
+            .photo-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+        }
+
+        /* Music visualizer */
+        .visualizer {
+            display: flex;
+            gap: 5px;
+            align-items: center;
+            justify-content: center;
+            height: 30px;
+            margin-left: 20px;
+        }
+
+        .bar {
+            width: 4px;
+            background: var(--gold);
+            border-radius: 2px;
+            animation: wave 1s ease-in-out infinite;
+        }
+
+        .bar:nth-child(1) { animation-delay: 0s; }
+        .bar:nth-child(2) { animation-delay: 0.1s; }
+        .bar:nth-child(3) { animation-delay: 0.2s; }
+        .bar:nth-child(4) { animation-delay: 0.3s; }
+        .bar:nth-child(5) { animation-delay: 0.4s; }
+
+        @keyframes wave {
+            0%, 100% { height: 10px; }
+            50% { height: 30px; }
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Floating Hearts Background -->
+    <div class="heart-bg" id="heartBg"></div>
+
+    <div class="container">
+        <!-- Hidden Audio Player -->
+        <audio id="audioPlayer"></audio>
+
+        <!-- Header -->
+        <header>
+            <h1>Forever & Always</h1>
+            <p class="subtitle">Our Love Knows No Distance</p>
+            <div class="distance-counter">
+                <span id="daysCounter">0</span> days of loving you ❤️
+            </div>
+        </header>
+
+        <!-- Music Player Section -->
+        <section class="music-section">
+            <h2>💕 Our Love Songs 💕</h2>
+            <div class="upload-area" style="margin-bottom: 30px;" onclick="document.getElementById('songInput').click()">
+                <div class="upload-text">🎵 Add Her Favorite Songs 🎵</div>
+                <p>Upload .wav or .mp3 audio files</p>
+                <input type="file" id="songInput" accept="audio/*" multiple style="display: none;">
+            </div>
+            <div class="playlist" id="playlist">
+                <!-- Songs will be added here dynamically -->
+            </div>
+        </section>
+
+        <!-- Photo Gallery Section -->
+        <section class="gallery-section">
+            <h2>📸 Our Beautiful Memories 📸</h2>
+            <div class="upload-area" onclick="document.getElementById('photoInput').click()">
+                <div class="upload-text">✨ Click to Add Her Photos ✨</div>
+                <p>Share your favorite moments together</p>
+                <input type="file" id="photoInput" accept="image/*" multiple>
+            </div>
+            <div class="photo-grid" id="photoGrid"></div>
+        </section>
+
+        <!-- Love Note -->
+        <div class="love-note">
+            <p>"1146 days of together and I want to spend my whole life with you. Distance means nothing when you mean everything to me. Forever and always, my love! 💖✨"</p>
+        </div>
+    </div>
+
+    <script>
+        // Floating Hearts Background
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.innerHTML = '❤️';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = (Math.random() * 10 + 10) + 's';
+            heart.style.animationDelay = Math.random() * 5 + 's';
+            heart.style.fontSize = (Math.random() * 20 + 15) + 'px';
+            document.getElementById('heartBg').appendChild(heart);
+
+            setTimeout(() => {
+                heart.remove();
+            }, 20000);
+        }
+
+        // Create hearts continuously
+        setInterval(createHeart, 300);
+        for (let i = 0; i < 10; i++) {
+            setTimeout(createHeart, i * 300);
+        }
+
+        // Days Counter - Starting from 1146 days
+        function updateDaysCounter() {
+            const baseDays = 1146; // Your milestone
+            const milestoneDate = new Date('2021-12-15'); // Calculated backwards from Feb 1, 2026
+            const today = new Date();
+            const diffTime = Math.abs(today - milestoneDate);
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+            document.getElementById('daysCounter').textContent = diffDays;
+        }
+        updateDaysCounter();
+
+        // Music Player Functionality with Real Audio
+        const audioPlayer = document.getElementById('audioPlayer');
+        const playlist = document.getElementById('playlist');
+        let songs = JSON.parse(localStorage.getItem('valentineSongs')) || [];
+        let currentlyPlaying = null;
+        let currentSongIndex = -1;
+
+        function loadSongs() {
+            playlist.innerHTML = '';
+            songs.forEach((songData, index) => {
+                const songItem = document.createElement('div');
+                songItem.classList.add('song-item');
+                songItem.dataset.song = index;
+                songItem.style.position = 'relative';
+                songItem.innerHTML = `
+                    <div class="song-info">
+                        <div class="song-title">${songData.name}</div>
+                        <div class="song-artist">❤️ Her Favorite</div>
+                    </div>
+                    <div class="visualizer hidden">
+                        <div class="bar"></div>
+                        <div class="bar"></div>
+                        <div class="bar"></div>
+                        <div class="bar"></div>
+                        <div class="bar"></div>
+                    </div>
+                    <button class="delete-song-btn" onclick="deleteSong(${index})" style="position: absolute; top: 10px; right: 60px; background: rgba(255, 255, 255, 0.9); border: none; border-radius: 50%; width: 30px; height: 30px; cursor: pointer; font-size: 1.2em; color: var(--deep-rose); opacity: 0; transition: all 0.3s ease;">×</button>
+                    <button class="play-btn">▶</button>
+                `;
+                playlist.appendChild(songItem);
+                
+                const playBtn = songItem.querySelector('.play-btn');
+                const visualizer = songItem.querySelector('.visualizer');
+
+                // Show delete button on hover
+                songItem.addEventListener('mouseenter', () => {
+                    songItem.querySelector('.delete-song-btn').style.opacity = '1';
+                });
+                songItem.addEventListener('mouseleave', () => {
+                    songItem.querySelector('.delete-song-btn').style.opacity = '0';
+                });
+
+                playBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    togglePlay(index, songItem, playBtn, visualizer);
+                });
+
+                songItem.addEventListener('click', (e) => {
+                    if (!e.target.classList.contains('delete-song-btn')) {
+                        playBtn.click();
+                    }
+                });
+            });
+        }
+
+        function deleteSong(index) {
+            if (currentSongIndex === index) {
+                audioPlayer.pause();
+                audioPlayer.src = '';
+                currentlyPlaying = null;
+                currentSongIndex = -1;
+            }
+            songs.splice(index, 1);
+            localStorage.setItem('valentineSongs', JSON.stringify(songs));
+            loadSongs();
+        }
+
+        function togglePlay(index, songItem, playBtn, visualizer) {
+            if (currentSongIndex === index && !audioPlayer.paused) {
+                // Pause current song
+                audioPlayer.pause();
+                playBtn.textContent = '▶';
+                visualizer.classList.add('hidden');
+                songItem.classList.remove('playing');
+            } else {
+                // Stop currently playing song
+                if (currentlyPlaying) {
+                    currentlyPlaying.item.classList.remove('playing');
+                    currentlyPlaying.btn.textContent = '▶';
+                    currentlyPlaying.viz.classList.add('hidden');
+                }
+
+                // Play new song
+                audioPlayer.src = songs[index].data;
+                audioPlayer.play();
+                playBtn.textContent = '⏸';
+                visualizer.classList.remove('hidden');
+                songItem.classList.add('playing');
+                
+                currentSongIndex = index;
+                currentlyPlaying = { item: songItem, btn: playBtn, viz: visualizer };
+            }
+        }
+
+        // Handle song end - auto play next
+        audioPlayer.addEventListener('ended', () => {
+            if (currentSongIndex < songs.length - 1) {
+                const nextIndex = currentSongIndex + 1;
+                const nextItem = playlist.querySelector(`[data-song="${nextIndex}"]`);
+                const nextBtn = nextItem.querySelector('.play-btn');
+                const nextViz = nextItem.querySelector('.visualizer');
+                
+                if (currentlyPlaying) {
+                    currentlyPlaying.item.classList.remove('playing');
+                    currentlyPlaying.btn.textContent = '▶';
+                    currentlyPlaying.viz.classList.add('hidden');
+                }
+                
+                togglePlay(nextIndex, nextItem, nextBtn, nextViz);
+            } else {
+                // Reset when playlist ends
+                if (currentlyPlaying) {
+                    currentlyPlaying.item.classList.remove('playing');
+                    currentlyPlaying.btn.textContent = '▶';
+                    currentlyPlaying.viz.classList.add('hidden');
+                }
+                currentlyPlaying = null;
+                currentSongIndex = -1;
+            }
+        });
+
+        // Song Upload
+        const songInput = document.getElementById('songInput');
+        songInput.addEventListener('change', (e) => {
+            const files = Array.from(e.target.files);
+            files.forEach(file => {
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    songs.push({
+                        name: file.name.replace(/\.(wav|mp3|m4a|ogg)$/i, ''),
+                        data: event.target.result
+                    });
+                    localStorage.setItem('valentineSongs', JSON.stringify(songs));
+                    loadSongs();
+                };
+                reader.readAsDataURL(file);
+            });
+            songInput.value = '';
+        });
+
+        // Load songs on page load
+        loadSongs();
+
+        // Photo Upload and Gallery
+        const photoInput = document.getElementById('photoInput');
+        const photoGrid = document.getElementById('photoGrid');
+        let photos = JSON.parse(localStorage.getItem('valentinePhotos')) || [];
+
+        function loadPhotos() {
+            photoGrid.innerHTML = '';
+            photos.forEach((photoData, index) => {
+                const photoCard = document.createElement('div');
+                photoCard.classList.add('photo-card');
+                photoCard.style.animationDelay = `${index * 0.1}s`;
+                photoCard.innerHTML = `
+                    <img src="${photoData}" alt="Memory ${index + 1}">
+                    <button class="delete-btn" onclick="deletePhoto(${index})">×</button>
+                `;
+                photoGrid.appendChild(photoCard);
+            });
+        }
+
+        photoInput.addEventListener('change', (e) => {
+            const files = Array.from(e.target.files);
+            files.forEach(file => {
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    photos.push(event.target.result);
+                    localStorage.setItem('valentinePhotos', JSON.stringify(photos));
+                    loadPhotos();
+                };
+                reader.readAsDataURL(file);
+            });
+            photoInput.value = '';
+        });
+
+        function deletePhoto(index) {
+            photos.splice(index, 1);
+            localStorage.setItem('valentinePhotos', JSON.stringify(photos));
+            loadPhotos();
+        }
+
+        // Load photos on page load
+        loadPhotos();
+
+        // Add some sparkle effect on scroll
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const header = document.querySelector('header');
+            header.style.transform = `translateY(${scrolled * 0.5}px)`;
+        });
+    </script>
+</body>
+</html>
