@@ -271,22 +271,33 @@ style="width:100%;margin-top:10px;cursor:pointer;">
 </div>
 </section>
 
-<div class="promise-section">
-<p class="promise-text">Yours Forever & Always ❤️</p>
-</div>
+<div class="promise-section reveal">
+        <div class="valentine-heart" style="font-size: 4rem;">🌹</div>
+        <p class="promise-text">
+            "My Dearest Bhumiiiii, as I look back on these <span class="highlight">1146 days</span>, I realize that every second spent with you has been a gift I never knew I deserved. You aren't just a part of my life; you are the very soul of it. From the way you smile to the quiet moments we share, you have turned my world into a beautiful masterpiece of love and laughter."
+            <br><br>
+            "On this Valentine's Day, I want to make a promise that transcends time. <span class="highlight">I want to spend my entire life by your side</span>—to be the one who wakes up next to you every morning, the one who supports your wildest dreams, and the one who holds your hand through every season life brings our way. I am, and will be, <span class="highlight">forever grateful</span> for the day you walked into my life and chose to stay."
+            <br><br>
+            "I don't just want a 'happily ever after' with you... I want the 'everything in between.' I want the mundane Tuesdays, the late-night talks, and the decades of memories we have yet to create. You are my home, my greatest adventure, and my favorite 'always.' <br>
+            <span style="font-family: 'Dancing Script'; font-size: clamp(2rem, 5vw, 3rem); display: block; margin-top: 30px; color: var(--rose); text-shadow: 0 0 10px rgba(255,133,162,0.5);">Yours Forever & Always ❤️</span>
+        </p>
+    </div>
 
 <script>
-const audio = document.getElementById('mainAudio');
-const seekBar = document.getElementById('seekBar');
-const playBtn = document.getElementById('playBtn');
-const songTitle = document.getElementById('songTitle');
-const player = document.getElementById('musicPlayer');
 
-let currentSong = "";
+/* ================= AUDIO PLAYER ================= */
 
-/* PLAY SONG */
+const audio = document.getElementById("mainAudio");
+const seekBar = document.getElementById("seekBar");
+const playBtn = document.getElementById("playBtn");
+const songTitle = document.getElementById("songTitle");
+const player = document.getElementById("musicPlayer");
+
+let currentSong = null;
+
 function playSong(path, element){
 
+// SAME SONG → toggle
 if(currentSong === path){
 togglePlay();
 return;
@@ -294,18 +305,24 @@ return;
 
 currentSong = path;
 audio.src = path;
-audio.play();
 
+audio.play()
+.then(()=>{
 player.style.display = "block";
-
-songTitle.innerText =
-element.innerText.replace("▶","").trim();
-
+songTitle.innerText = element.innerText.replace("▶","").trim();
 playBtn.innerText = "⏸ Pause";
+})
+.catch(err=>{
+alert("Audio failed to load. Check songs folder name!");
+});
+
 }
 
 /* PLAY / PAUSE */
+
 function togglePlay(){
+
+if(!audio.src) return;
 
 if(audio.paused){
 audio.play();
@@ -317,8 +334,11 @@ playBtn.innerText="▶ Play";
 
 }
 
-/* UPDATE SLIDER */
+/* SLIDER */
+
 audio.addEventListener("timeupdate",()=>{
+
+if(!audio.duration) return;
 
 seekBar.max = audio.duration;
 seekBar.value = audio.currentTime;
@@ -336,16 +356,12 @@ audio.currentTime = seekBar.value;
 });
 
 /* FORMAT TIME */
-function formatTime(time){
 
-if(isNaN(time)) return "0:00";
-
-let minutes = Math.floor(time/60);
-let seconds = Math.floor(time%60);
-
-if(seconds < 10) seconds = "0"+seconds;
-
-return minutes+":"+seconds;
+function formatTime(t){
+let m = Math.floor(t/60);
+let s = Math.floor(t%60);
+if(s<10) s="0"+s;
+return m+":"+s;
 }
 
 audio.addEventListener("ended",()=>{
@@ -353,16 +369,21 @@ playBtn.innerText="▶ Play";
 seekBar.value=0;
 });
 
+/* ================= HEARTS ================= */
 
-/* ✅ FIXED HEART SPAWN (NO 100vh) */
 function spawnHeart(){
+
 const h=document.createElement('div');
-h.innerHTML=['❤️','💖','💝','💕','🌹'][Math.floor(Math.random()*5)];
+
+h.innerHTML=['❤️','💖','💝','💕','🌹']
+[Math.floor(Math.random()*5)];
+
 h.style.position='fixed';
 h.style.left=Math.random()*100+'vw';
 h.style.top=window.innerHeight+'px';
 h.style.fontSize=(Math.random()*20+15)+'px';
 h.style.transition='transform 6s linear, opacity 2s';
+
 document.getElementById('heartContainer').appendChild(h);
 
 setTimeout(()=>{
@@ -372,27 +393,35 @@ h.style.opacity='0';
 
 setTimeout(()=>h.remove(),7000);
 }
+
 setInterval(spawnHeart,400);
 
 function createHeartBurst(e){
+
 for(let i=0;i<8;i++){
+
 const b=document.createElement('div');
 b.innerHTML='❤️';
 b.style.position='fixed';
 b.style.left=e.clientX+'px';
 b.style.top=e.clientY+'px';
 b.style.transition='all 1s ease-out';
+
 document.body.appendChild(b);
 
 setTimeout(()=>{
-b.style.transform=`translate(${(Math.random()-0.5)*200}px,${(Math.random()-0.5)*200}px) scale(0)`;
+b.style.transform=`translate(${(Math.random()-0.5)*200}px,
+${(Math.random()-0.5)*200}px) scale(0)`;
 b.style.opacity='0';
 },50);
 
 setTimeout(()=>b.remove(),1000);
 }
+
 }
+
 </script>
+
 
 </body>
 </html>
