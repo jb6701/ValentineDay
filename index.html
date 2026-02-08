@@ -1,312 +1,300 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Forever Story ❤️</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400&family=Dancing+Script:wght@700&family=Cormorant+Garamond:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --rose: #ff85a2;
+            --deep-love: #b33939;
+            --gold: #d4af37;
+            --soft-glow: rgba(255, 133, 162, 0.4);
+            --glass: rgba(255, 255, 255, 0.8);
+        }
 
-<meta name="viewport"
-      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+        body {
+            font-family: 'Cormorant Garamond', serif;
+            background: linear-gradient(135deg, #fffafa 0%, #ffe4e1 100%);
+            color: #2d3436;
+            margin: 0;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
 
-<title>Our Forever Story ❤️</title>
+        /* Floating Hearts Container */
+        #heartContainer {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 1000; /* High z-index to float over everything */
+        }
 
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400&family=Dancing+Script:wght@700&family=Cormorant+Garamond:wght@300;400;600&display=swap" rel="stylesheet">
+        /* Header Pulsing Heart */
+        .valentine-heart {
+            color: var(--rose);
+            font-size: 3rem;
+            animation: pulse 1.5s infinite;
+            display: block;
+            margin-bottom: 10px;
+        }
 
-<style>
-:root {
-    --rose: #ff85a2;
-    --deep-love: #b33939;
-    --gold: #d4af37;
-    --soft-glow: rgba(255,133,162,0.4);
-    --glass: rgba(255,255,255,0.85);
-}
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); text-shadow: 0 0 20px var(--rose); }
+            100% { transform: scale(1); }
+        }
 
-html, body {
-    margin: 0;
-    padding: 0;
-    overflow-x: hidden;
-    touch-action: manipulation;
-}
+        /* Header Section */
+        header {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: linear-gradient(rgba(255,255,255,0.4), rgba(255,255,255,0.4)), 
+                        url('Images/pic1.jpg') no-repeat center center/cover;
+            padding: 20px;
+        }
 
-body {
-    font-family: 'Cormorant Garamond', serif;
-    background: linear-gradient(135deg, #fffafa, #ffe4e1);
-    color: #2d3436;
-    scroll-behavior: smooth;
-    -webkit-text-size-adjust: 100%;
-}
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(3.5rem, 10vw, 6.5rem);
+            color: var(--deep-love);
+            margin: 0;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.1);
+        }
 
-/* Floating Hearts */
-#heartContainer {
-    position: fixed;
-    inset: 0;
-    pointer-events: none;
-    z-index: 9999;
-}
+        .days-counter {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.8rem;
+            color: var(--gold);
+            margin-top: 15px;
+            background: var(--glass);
+            padding: 15px 40px;
+            border-radius: 50px;
+            box-shadow: 0 10px 25px rgba(255, 133, 162, 0.2);
+            border: 1px solid white;
+        }
 
-.float-heart {
-    position: fixed;
-    pointer-events: none;
-    opacity: 0.8;
-}
+        /* Music & Content Styles from your previous code */
+        .music-container {
+            max-width: 800px;
+            margin: 80px auto;
+            padding: 40px;
+            background: var(--glass);
+            border-radius: 30px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.05);
+            border: 1px solid white;
+            backdrop-filter: blur(10px);
+            position: relative;
+            z-index: 2;
+        }
 
-/* Header */
-header {
-    min-height: 100dvh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    background:
-      linear-gradient(rgba(255,255,255,0.4), rgba(255,255,255,0.4)),
-      url('images/pic1.jpeg') center/cover no-repeat;
-    padding: 20px;
-}
+        .playlist { display: grid; gap: 15px; }
+        .song-card {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 15px 25px; background: white; border-radius: 15px;
+            transition: 0.3s; cursor: pointer; border-left: 5px solid transparent;
+        }
+        .song-card:hover { transform: scale(1.02); border-left-color: var(--rose); box-shadow: 0 5px 15px var(--soft-glow); }
+        .song-card.active { background: #fff0f3; border-left-color: var(--deep-love); }
+        .play-icon { font-size: 1.5rem; color: var(--rose); }
 
-.valentine-heart {
-    font-size: 3rem;
-    animation: pulse 1.5s infinite;
-    color: var(--rose);
-}
+        /* Gallery Styles */
+        .gallery-section { max-width: 1100px; margin: 100px auto; padding: 0 20px; position: relative; z-index: 2; }
+        .gallery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; }
+        .memory-card { background: white; padding: 15px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); transition: 0.5s ease; border: 1px solid #fce4ec; }
+        .memory-card img { width: 100%; height: 380px; object-fit: cover; border-radius: 10px; }
+        .memory-caption { font-family: 'Dancing Script', cursive; font-size: 1.8rem; text-align: center; margin-top: 15px; color: var(--deep-love); }
 
-@keyframes pulse {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.2); }
-    100% { transform: scale(1); }
-}
+        /* Promise Section */
+        .promise-section { text-align: center; padding: 100px 20px; background: rgba(255, 240, 243, 0.8); position: relative; z-index: 2; }
+        .promise-text { font-size: 2.2rem; max-width: 900px; margin: 0 auto; line-height: 1.5; font-weight: 300; }
+        .highlight { color: var(--deep-love); font-weight: 600; }
 
-h1 {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(3rem, 9vw, 6rem);
-    color: var(--deep-love);
-    margin: 10px 0;
-}
+        .reveal { opacity: 0; transform: translateY(30px); transition: 1s ease-out; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
 
-.days-counter {
-    font-family: 'Dancing Script', cursive;
-    font-size: 2.2rem;
-    color: var(--gold);
-    background: var(--glass);
-    padding: 15px 30px;
-    border-radius: 50px;
-    box-shadow: 0 10px 25px var(--soft-glow);
-}
+        /* Floating Heart Individual Style */
+        .float-heart {
+            position: fixed;
+            pointer-events: none;
+            opacity: 0.8;
+            z-index: 9999;
+        }
 
-/* Music */
-.music-container {
-    max-width: 800px;
-    margin: 80px auto;
-    padding: 40px;
-    background: var(--glass);
-    border-radius: 30px;
-    box-shadow: 0 15px 40px rgba(0,0,0,0.05);
-}
-
-.playlist {
-    display: grid;
-    gap: 15px;
-}
-
-.song-card {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px 20px;
-    background: white;
-    border-radius: 15px;
-    cursor: pointer;
-    transition: 0.3s;
-    border-left: 5px solid transparent;
-}
-
-.song-card:hover {
-    transform: scale(1.02);
-    border-left-color: var(--rose);
-}
-
-.song-card.active {
-    background: #fff0f3;
-    border-left-color: var(--deep-love);
-}
-
-.play-icon {
-    font-size: 1.4rem;
-    color: var(--rose);
-}
-
-/* Gallery */
-.gallery-section {
-    max-width: 1100px;
-    margin: 100px auto;
-    padding: 0 20px;
-}
-
-.gallery-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 30px;
-}
-
-.memory-card {
-    background: white;
-    padding: 15px;
-    border-radius: 15px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-}
-
-.memory-card img {
-    width: 100%;
-    height: auto;
-    max-height: 380px;
-    object-fit: cover;
-    border-radius: 10px;
-}
-
-.memory-caption {
-    font-family: 'Dancing Script', cursive;
-    font-size: 1.7rem;
-    text-align: center;
-    margin-top: 10px;
-    color: var(--deep-love);
-}
-
-/* Promise */
-.promise-section {
-    padding: 100px 20px;
-    background: rgba(255,240,243,0.85);
-    text-align: center;
-}
-
-.promise-text {
-    font-size: 2rem;
-    max-width: 900px;
-    margin: auto;
-    line-height: 1.5;
-}
-
-.highlight {
-    color: var(--deep-love);
-    font-weight: 600;
-}
-
-/* Reveal */
-.reveal {
-    opacity: 0;
-    transform: translateY(30px);
-    transition: 1s ease;
-}
-
-.reveal.active {
-    opacity: 1;
-    transform: translateY(0);
-}
-</style>
+    </style>
 </head>
-
 <body onclick="createHeartBurst(event)">
 
-<div id="heartContainer"></div>
-<audio id="mainAudio"></audio>
+    <div id="heartContainer"></div>
+    <audio id="mainAudio"></audio>
 
-<header>
-    <span class="valentine-heart">❤️</span>
-    <h1 class="reveal active">Happy Valentine's Day</h1>
-    <div class="days-counter reveal active">1146 Days of Loving You ❤️</div>
-</header>
+    <header>
+        <span class="valentine-heart">❤️</span>
+        <h1 class="reveal active">Happy Valentine's Day</h1>
+        <div class="days-counter reveal active">1146 Days of Loving You ❤️</div>
+    </header>
 
-<section class="music-container reveal">
-<h2 style="text-align:center;color:var(--deep-love)">🎵 Our Valentine Playlist</h2>
+    <section class="music-container reveal">
+        <h2 style="text-align: center; font-family: 'Playfair Display'; color: var(--deep-love);">🎵 Our Valentine Playlist</h2>
+        <div class="playlist">
+            <div class="song-card" onclick="playSong('Songs/Pehla.mp3', this)">
+                <div class="song-info"><b>Pehla Pehla Pyaar</b><p>S.P. Balasubrahmanyam</p></div>
+                <div class="play-icon">▶</div>
+            </div>
+            <div class="song-card" onclick="playSong('Songs/MainAgar.mp3', this)">
+                <div class="song-info"><b>Main Agar Kahoon</b><p>Om Shanti Om</p></div>
+                <div class="play-icon">▶</div>
+            </div>
+            <div class="song-card" onclick="playSong('Songs/TereBina.mp3', this)">
+                <div class="song-info"><b>Tere Bina</b><p>A.R. Rahman</p></div>
+                <div class="play-icon">▶</div>
+            </div>
+            <div class="song-card" onclick="playSong('Songs/TumHo.mp3', this)">
+                <div class="song-info"><b>Tum Ho</b><p>Mohit Chauhan</p></div>
+                <div class="play-icon">▶</div>
+            </div>
+            <div class="song-card" onclick="playSong('Songs/Ambarsariya.mp3', this)">
+                <div class="song-info"><b>Ambarsariya</b><p>Sona Mohapatra</p></div>
+                <div class="play-icon">▶</div>
+            </div>
+            <div class="song-card" onclick="playSong('Songs/Guzarish.mp3', this)">
+                <div class="song-info"><b>Guzarish</b><p>Javed Ali</p></div>
+                <div class="play-icon">▶</div>
+            </div>
+            <div class="song-card" onclick="playSong('Songs/TuJaaneNa.mp3', this)">
+                <div class="song-info"><b>Tu Jaane Na</b><p>Atif Aslam</p></div>
+                <div class="play-icon">▶</div>
+            </div>
+            <div class="song-card" onclick="playSong('Songs/Chand.mp3', this)">
+                <div class="song-info"><b>Chand Sifarish</b><p>Shaan</p></div>
+                <div class="play-icon">▶</div>
+            </div>
+            <div class="song-card" onclick="playSong('Songs/Raanjhanaa.mp3', this)">
+                <div class="song-info"><b>Raanjhanaa</b><p>A.R. Rahman</p></div>
+                <div class="play-icon">▶</div>
+            </div>
+        </div>
+    </section>
 
-<div class="playlist">
-<div class="song-card" onclick="playSong('songs/pehla.mp3',this)">
-<b>Pehla Pehla Pyaar</b><span class="play-icon">▶</span>
+    <section class="gallery-section">
+        <div class="gallery-grid">
+            <div class="memory-card reveal">
+                <img src="Images/pic1.jpeg" alt="Memory 1">
+                <div class="memory-caption">My Sunshine ☀️</div>
+            </div>
+            <div class="memory-card reveal">
+                <img src="Images/pic2.jpeg" alt="Memory 2">
+                <div class="memory-caption">That Beautiful Smile ✨</div>
+            </div>
+            <div class="memory-card reveal">
+                <img src="Images/pic3.jpeg" alt="Memory 3">
+                <div class="memory-caption">My North Star ❤️</div>
+            </div>
+            <div class="memory-card reveal">
+                <img src="Images/pic4.jpeg" alt="Memory 4">
+                <div class="memory-caption">My Whole World 💍</div>
+            </div>
+           <div class="memory-card reveal">
+    <img src="Images/pic5.jpeg" alt="Memory 5">
+    <div class="memory-caption">My Constant Craving 🍭✨</div>
 </div>
-<div class="song-card" onclick="playSong('songs/mainagar.mp3',this)">
-<b>Main Agar Kahoon</b><span class="play-icon">▶</span>
-</div>
-<div class="song-card" onclick="playSong('songs/terebina.mp3',this)">
-<b>Tere Bina</b><span class="play-icon">▶</span>
-</div>
-</div>
-</section>
 
-<section class="gallery-section">
-<div class="gallery-grid">
-<div class="memory-card reveal"><img src="images/pic1.jpeg"><div class="memory-caption">My Sunshine ☀️</div></div>
-<div class="memory-card reveal"><img src="images/pic2.jpeg"><div class="memory-caption">That Smile ✨</div></div>
-<div class="memory-card reveal"><img src="images/pic3.jpeg"><div class="memory-caption">My North Star ❤️</div></div>
-<div class="memory-card reveal"><img src="images/pic4.jpeg"><div class="memory-caption">My World 💍</div></div>
+<div class="memory-card reveal">
+    <img src="Images/pic6.jpeg" alt="Memory 6">
+    <div class="memory-caption">My Favorite Human 🌎💖</div>
 </div>
-</section>
+        </div>
+    </section>
 
 <div class="promise-section reveal">
-<p class="promise-text">
-My Dearest <span class="highlight">Bhumiiiii</span>, every day with you is magic.
-<br><br>
-<span class="highlight">Forever & Always ❤️</span>
-</p>
-</div>
+        <div class="valentine-heart" style="font-size: 4rem;">🌹</div>
+        <p class="promise-text">
+            "My Dearest Bhumiiiii, as I look back on these <span class="highlight">1146 days</span>, I realize that every second spent with you has been a gift I never knew I deserved. You aren't just a part of my life; you are the very soul of it. From the way you smile to the quiet moments we share, you have turned my world into a beautiful masterpiece of love and laughter."
+            <br><br>
+            "On this Valentine’s Day, I want to make a promise that transcends time. <span class="highlight">I want to spend my entire life by your side</span>—to be the one who wakes up next to you every morning, the one who supports your wildest dreams, and the one who holds your hand through every season life brings our way. I am, and will be, <span class="highlight">forever grateful</span> for the day you walked into my life and chose to stay."
+            <br><br>
+            "I don't just want a 'happily ever after' with you... I want the 'everything in between.' I want the mundane Tuesdays, the late-night talks, and the decades of memories we have yet to create. You are my home, my greatest adventure, and my favorite 'always.' <br>
+            <span style="font-family: 'Dancing Script'; font-size: 3rem; display: block; margin-top: 30px; color: var(--rose); text-shadow: 0 0 10px rgba(255,133,162,0.5);">Yours Forever & Always ❤️</span>
+        </p>
+    </div>
 
-<script>
-const audio = document.getElementById('mainAudio');
+    <script>
+        const audio = document.getElementById('mainAudio');
+        function playSong(path, element) {
+            const cards = document.querySelectorAll('.song-card');
+            cards.forEach(c => {
+                c.classList.remove('active');
+                c.querySelector('.play-icon').innerHTML = '▶';
+            });
+            
+            if (audio.src.includes(path) && !audio.paused) {
+                audio.pause();
+            } else {
+                audio.src = path;
+                audio.play();
+                element.classList.add('active');
+                element.querySelector('.play-icon').innerHTML = '⏸';
+            }
+        }
 
-function playSong(path, el) {
-    document.querySelectorAll('.song-card').forEach(c=>{
-        c.classList.remove('active');
-        c.querySelector('.play-icon').textContent='▶';
-    });
+        window.addEventListener("scroll", () => {
+            document.querySelectorAll(".reveal").forEach(el => {
+                if (el.getBoundingClientRect().top < window.innerHeight - 100) {
+                    el.classList.add("active");
+                }
+            });
+        });
 
-    if(audio.src.includes(path) && !audio.paused){
-        audio.pause();
-    } else {
-        audio.src = path;
-        audio.play();
-        el.classList.add('active');
-        el.querySelector('.play-icon').textContent='⏸';
-    }
-}
+        // 1. Automatic Background Floating Hearts
+        function spawnHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('float-heart');
+            heart.innerHTML = ['❤️', '💖', '💝', '💕', '🌹'][Math.floor(Math.random() * 5)];
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.top = '100vh';
+            heart.style.fontSize = (Math.random() * 20 + 15) + 'px';
+            heart.style.transition = `transform ${Math.random() * 3 + 4}s linear, opacity 2s`;
+            
+            document.getElementById('heartContainer').appendChild(heart);
 
-window.addEventListener("scroll",()=>{
-document.querySelectorAll(".reveal").forEach(el=>{
-if(el.getBoundingClientRect().top < window.innerHeight - 100){
-el.classList.add("active");
-}
-});
-});
+            setTimeout(() => {
+                heart.style.transform = `translateY(-115vh) rotate(${Math.random() * 360}deg)`;
+                heart.style.opacity = '0';
+            }, 100);
 
-/* Floating hearts */
-function spawnHeart(){
-const h=document.createElement("div");
-h.className="float-heart";
-h.innerHTML=["❤️","💖","💕","💝","🌹"][Math.random()*5|0];
-h.style.left=Math.random()*100+"vw";
-h.style.top="100vh";
-h.style.fontSize=(Math.random()*20+15)+"px";
-h.style.transition="transform 6s linear,opacity 2s";
-heartContainer.appendChild(h);
-setTimeout(()=>{
-h.style.transform=`translateY(-120vh) rotate(${Math.random()*360}deg)`;
-h.style.opacity=0;
-},100);
-setTimeout(()=>h.remove(),7000);
-}
-setInterval(spawnHeart,500);
+            setTimeout(() => heart.remove(), 7000);
+        }
+        setInterval(spawnHeart, 400);
 
-function createHeartBurst(e){
-for(let i=0;i<8;i++){
-const b=document.createElement("div");
-b.className="float-heart";
-b.innerHTML="❤️";
-b.style.left=e.clientX+"px";
-b.style.top=e.clientY+"px";
-b.style.transition="1s";
-document.body.appendChild(b);
-setTimeout(()=>{
-b.style.transform=`translate(${(Math.random()-0.5)*200}px,${(Math.random()-0.5)*200}px) scale(0)`;
-b.style.opacity=0;
-},50);
-setTimeout(()=>b.remove(),1000);
-}
-}
-</script>
+        // 2. Click-to-Burst Heart Effect
+        function createHeartBurst(e) {
+            for (let i = 0; i < 8; i++) {
+                const burst = document.createElement('div');
+                burst.classList.add('float-heart');
+                burst.innerHTML = '❤️';
+                burst.style.left = e.clientX + 'px';
+                burst.style.top = e.clientY + 'px';
+                burst.style.fontSize = '20px';
+                burst.style.transition = 'all 1s ease-out';
+                
+                document.body.appendChild(burst);
+
+                const moveX = (Math.random() - 0.5) * 200;
+                const moveY = (Math.random() - 0.5) * 200;
+
+                setTimeout(() => {
+                    burst.style.transform = `translate(${moveX}px, ${moveY}px) scale(0)`;
+                    burst.style.opacity = '0';
+                }, 50);
+
+                setTimeout(() => burst.remove(), 1000);
+            }
+        }
+    </script>
 </body>
 </html>
