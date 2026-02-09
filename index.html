@@ -24,39 +24,39 @@ box-sizing:border-box;
 -webkit-tap-highlight-color:transparent;
 }
 
-html, body{
-width:100%;
-height:auto;
-min-height:100%;
-overflow-x:hidden;   /* prevent horizontal scroll */
-overflow-y:scroll;   /* force vertical scrolling */
-scroll-behavior:smooth;
--webkit-text-size-adjust:100%;
-touch-action:pan-y; /* allow finger vertical scrolling */
+html, body {
+    width: 100%;
+    /* Remove fixed height and overflow-y: scroll */
+    height: auto; 
+    min-height: 100%;
+    /* Allow the browser to handle overflow naturally */
+    overflow-x: hidden; 
+    /* Remove touch-action as it can block native momentum scrolling */
+    touch-action: auto; 
+    -webkit-text-size-adjust: 100%;
 }
 
-
-
-body{
-font-family:'Cormorant Garamond',serif;
-background:linear-gradient(135deg,#fffafa 0%,#ffe4e1 100%);
-color:#2d3436;
-overscroll-behavior:auto; /* ✅ FIXED: allows mobile touch scrolling */
+body {
+    font-family: 'Cormorant Garamond', serif;
+    background: linear-gradient(135deg, #fffafa 0%, #ffe4e1 100%);
+    color: #2d3436;
+    /* This ensures momentum scrolling on iOS and stability on Android */
+    -webkit-overflow-scrolling: touch; 
 }
 
 
 /* ✅ FIXED HEADER HEIGHT (NO MOBILE JUMP) */
-header{
-min-height:100vh;
-min-height:100svh;
-display:flex;
-flex-direction:column;
-justify-content:center;
-align-items:center;
-text-align:center;
-padding:20px;
-position:relative;
-overflow:hidden;
+header {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+    position: relative;
+    /* Ensure it doesn't clip the rest of the page */
+    overflow: visible; 
 }
 
 header::before{
