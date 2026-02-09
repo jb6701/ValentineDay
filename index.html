@@ -25,11 +25,16 @@ box-sizing:border-box;
 }
 
 html, body{
-max-width:100%;
-overflow-y:auto;
+width:100%;
+height:auto;
+min-height:100%;
+overflow-x:hidden;   /* prevent horizontal scroll */
+overflow-y:scroll;   /* force vertical scrolling */
 scroll-behavior:smooth;
 -webkit-text-size-adjust:100%;
+touch-action:pan-y; /* allow finger vertical scrolling */
 }
+
 
 
 body{
