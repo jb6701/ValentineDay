@@ -24,23 +24,29 @@ box-sizing:border-box;
 -webkit-tap-highlight-color:transparent;
 }
 
-html {
-    /* Prevents the 'bounce' effect on some mobile browsers */
-    overflow: hidden;
+/* --- THE STABILITY FIX --- */
+html, body {
+    width: 100%;
     height: 100%;
+    overflow: hidden; /* Locks the outer window */
+    background: #fffafa;
 }
 
 body {
-    width: 100%;
-    height: 100%;
-    /* Allow scrolling only on the body content */
+    display: flex;
+    flex-direction: column;
+    font-family: 'Cormorant Garamond', serif;
+    color: #2d3436;
+}
+
+/* This container handles the scrolling instead of the body */
+#scroll-container {
+    flex: 1;
     overflow-y: auto;
     overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
     position: relative;
-    -webkit-overflow-scrolling: touch; 
-    font-family: 'Cormorant Garamond', serif;
     background: linear-gradient(135deg, #fffafa 0%, #ffe4e1 100%);
-    color: #2d3436;
 }
 
 header {
@@ -52,16 +58,9 @@ header {
     text-align: center;
     padding: 20px;
     position: relative;
-}
-
-header::before{
-content:"";
-position:absolute;
-inset:0;
-background:
-linear-gradient(rgba(255,255,255,.45),rgba(255,255,255,.45)),
-url("Images/Pic1.jpeg") center/cover no-repeat;
-z-index:-1;
+    /* Keeps background from jumping */
+    background: linear-gradient(rgba(255,255,255,.45),rgba(255,255,255,.45)),
+                url("Images/Pic1.jpeg") center/cover no-repeat;
 }
 
 :root{
@@ -72,13 +71,9 @@ z-index:-1;
 --glass:rgba(255,255,255,.8);
 }
 
-/* Fixed the heart container to never exceed screen bounds */
 #heartContainer{
 position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
+inset:0;
 pointer-events:none;
 z-index:1000;
 overflow:hidden;
@@ -114,7 +109,6 @@ border-radius:50px;
 box-shadow:0 10px 25px rgba(255,133,162,.2);
 }
 
-/* MUSIC */
 .music-container{
 max-width:800px;
 margin:60px auto;
@@ -135,15 +129,8 @@ padding:15px 20px;
 background:white;
 border-radius:15px;
 cursor:pointer;
-transition:.3s;
 }
 
-.song-card:hover{
-transform:scale(1.02);
-box-shadow:0 5px 15px var(--soft-glow);
-}
-
-/* GALLERY */
 .gallery-section{
 max-width:1100px;
 margin:80px auto;
@@ -178,7 +165,6 @@ margin-top:15px;
 color:var(--deep-love);
 }
 
-/* PROMISE */
 .promise-section{
 text-align:center;
 padding:80px 20px;
@@ -197,99 +183,83 @@ line-height:1.6;
 @media(max-width:768px){
 .gallery-grid{grid-template-columns:1fr;}
 .memory-card img{height:280px;}
-.music-container{margin:40px 15px;}
 }
 </style>
 </head>
 
-<body onclick="createHeartBurst(event)">
+<body>
 
 <div id="heartContainer"></div>
 <audio id="mainAudio"></audio>
 
-<div id="musicPlayer" style="
-max-width:700px;
-margin:20px auto;
-padding:15px;
-background:white;
-border-radius:20px;
-box-shadow:0 10px 25px rgba(0,0,0,.08);
-display:none;
-position: sticky;
-top: 10px;
-z-index: 2000;
-">
+<div id="scroll-container" onscroll="handleScroll()">
 
-<div style="display:flex;justify-content:space-between;align-items:center;gap:10px;">
-    
-<button onclick="togglePlay()" id="playBtn"
-style="border:none;background:#ff85a2;color:white;
-padding:10px 18px;border-radius:12px;font-size:16px;cursor:pointer;">
-▶ Play
-</button>
-
-<span id="songTitle" style="font-weight:600; font-size: 16px;"></span>
-
-</div>
-
-<input type="range" id="seekBar"
-value="0"
-style="width:100%;margin-top:10px;cursor:pointer; height: 20px;">
-
-<div style="display:flex;justify-content:space-between;font-size:14px;">
-<span id="currentTime">0:00</span>
-<span id="duration">0:00</span>
-</div>
-
-</div>
-
-
-<header>
-<span class="valentine-heart">❤️</span>
-<h1>Happy Valentine's Day</h1>
-<div class="days-counter">1146 Days of Loving You ❤️</div>
-</header>
-
-<section class="music-container">
-<h2 style="text-align:center;color:var(--deep-love)">🎵 Our Valentine Playlist</h2>
-<div class="playlist">
-<div class="song-card" onclick="playSong('Songs/Pehla.mp3',this)">Pehla Pehla Pyaar ▶</div>
-<div class="song-card" onclick="playSong('Songs/MainAgar.mp3',this)">Main Agar Kahoon ▶</div>
-<div class="song-card" onclick="playSong('Songs/TereBina.mp3',this)">Tere Bina ▶</div>
-<div class="song-card" onclick="playSong('Songs/TumHo.mp3',this)">Tum Ho ▶</div>
-<div class="song-card" onclick="playSong('Songs/Ambarsariya.mp3',this)">Ambarsariya ▶</div>
-<div class="song-card" onclick="playSong('Songs/Guzarish.mp3',this)">Guzarish ▶</div>
-<div class="song-card" onclick="playSong('Songs/TuJaaneNa.mp3',this)">Tu Jaane Na ▶</div>
-<div class="song-card" onclick="playSong('Songs/Chand.mp3',this)">Chand Sifarish ▶</div>
-<div class="song-card" onclick="playSong('Songs/Raanjhanaa.mp3',this)">Raanjhanaa ▶</div>
-</div>
-</section>
-
-<section class="gallery-section">
-<div class="gallery-grid">
-<div class="memory-card"><img src="Images/Pic1.jpeg"><div class="memory-caption">My Sunshine ☀️</div></div>
-<div class="memory-card"><img src="Images/Pic2.jpeg"><div class="memory-caption">That Beautiful Smile ✨</div></div>
-<div class="memory-card"><img src="Images/Pic3.jpeg"><div class="memory-caption">My North Star ❤️</div></div>
-<div class="memory-card"><img src="Images/Pic4.jpeg"><div class="memory-caption">My Whole World 💍</div></div>
-<div class="memory-card"><img src="Images/Pic5.jpeg"><div class="memory-caption">My Constant Craving 🍭✨</div></div>
-<div class="memory-card"><img src="Images/Pic6.jpeg"><div class="memory-caption">My Favorite Human 🌎💖</div></div>
-</div>
-</section>
-
-<div class="promise-section reveal">
-        <div class="valentine-heart" style="font-size: 4rem;">🌹</div>
-        <p class="promise-text">
-            "My Dearest Bhumiiiii, as I look back on these <span class="highlight">1146 days</span>, I realize that every second spent with you has been a gift I never knew I deserved. You aren't just a part of my life; you are the very soul of it. From the way you smile to the quiet moments we share, you have turned my world into a beautiful masterpiece of love and laughter."
-            <br><br>
-            "On this Valentine's Day, I want to make a promise that transcends time. <span class="highlight">I want to spend my entire life by your side</span>—to be the one who wakes up next to you every morning, the one who supports your wildest dreams, and the one who holds your hand through every season life brings our way. I am, and will be, <span class="highlight">forever grateful</span> for the day you walked into my life and chose to stay."
-            <br><br>
-            "I don't just want a 'happily ever after' with you... I want the 'everything in between.' I want the mundane Tuesdays, the late-night talks, and the decades of memories we have yet to create. You are my home, my greatest adventure, and my favorite 'always.' <br>
-            <span style="font-family: 'Dancing Script'; font-size: clamp(2rem, 5vw, 3rem); display: block; margin-top: 30px; color: var(--rose); text-shadow: 0 0 10px rgba(255,133,162,0.5);">Yours Forever & Always ❤️</span>
-        </p>
+    <div id="musicPlayer" style="
+    max-width:700px;
+    margin:10px auto;
+    padding:15px;
+    background:white;
+    border-radius:20px;
+    box-shadow:0 10px 25px rgba(0,0,0,.08);
+    display:none;
+    position: sticky;
+    top: 10px;
+    z-index: 2000;
+    width: 95%;
+    ">
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;">
+    <button onclick="togglePlay()" id="playBtn" style="border:none;background:#ff85a2;color:white;padding:10px 18px;border-radius:12px;font-size:16px;">▶ Play</button>
+    <span id="songTitle" style="font-weight:600; font-size: 14px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"></span>
+    </div>
+    <input type="range" id="seekBar" value="0" style="width:100%;margin-top:10px;">
     </div>
 
+    <header>
+        <span class="valentine-heart">❤️</span>
+        <h1>Happy Valentine's Day</h1>
+        <div class="days-counter">1146 Days of Loving You ❤️</div>
+    </header>
+
+    <section class="music-container">
+        <h2 style="text-align:center;color:var(--deep-love);margin-bottom:20px;">🎵 Our Valentine Playlist</h2>
+        <div class="playlist">
+            <div class="song-card" onclick="playSong('Songs/Pehla.mp3',this)">Pehla Pehla Pyaar ▶</div>
+            <div class="song-card" onclick="playSong('Songs/MainAgar.mp3',this)">Main Agar Kahoon ▶</div>
+            <div class="song-card" onclick="playSong('Songs/TereBina.mp3',this)">Tere Bina ▶</div>
+            <div class="song-card" onclick="playSong('Songs/TumHo.mp3',this)">Tum Ho ▶</div>
+            <div class="song-card" onclick="playSong('Songs/Ambarsariya.mp3',this)">Ambarsariya ▶</div>
+            <div class="song-card" onclick="playSong('Songs/Guzarish.mp3',this)">Guzarish ▶</div>
+            <div class="song-card" onclick="playSong('Songs/TuJaaneNa.mp3',this)">Tu Jaane Na ▶</div>
+            <div class="song-card" onclick="playSong('Songs/Chand.mp3',this)">Chand Sifarish ▶</div>
+            <div class="song-card" onclick="playSong('Songs/Raanjhanaa.mp3',this)">Raanjhanaa ▶</div>
+        </div>
+    </section>
+
+    <section class="gallery-section">
+        <div class="gallery-grid">
+            <div class="memory-card"><img src="Images/Pic1.jpeg"><div class="memory-caption">My Sunshine ☀️</div></div>
+            <div class="memory-card"><img src="Images/Pic2.jpeg"><div class="memory-caption">That Beautiful Smile ✨</div></div>
+            <div class="memory-card"><img src="Images/Pic3.jpeg"><div class="memory-caption">My North Star ❤️</div></div>
+            <div class="memory-card"><img src="Images/Pic4.jpeg"><div class="memory-caption">My Whole World 💍</div></div>
+            <div class="memory-card"><img src="Images/Pic5.jpeg"><div class="memory-caption">My Constant Craving 🍭✨</div></div>
+            <div class="memory-card"><img src="Images/Pic6.jpeg"><div class="memory-caption">My Favorite Human 🌎💖</div></div>
+        </div>
+    </section>
+
+    <div class="promise-section">
+        <div class="valentine-heart" style="font-size: 4rem;">🌹</div>
+        <p class="promise-text">
+            "My Dearest Bhumiiiii, as I look back on these <span class="highlight">1146 days</span>, I realize that every second spent with you has been a gift I never knew I deserved. You aren't just a part of my life; you are the very soul of it."
+            <br><br>
+            "On this Valentine's Day, I want to make a promise that transcends time. <span class="highlight">I want to spend my entire life by your side</span>. I am, and will be, <span class="highlight">forever grateful</span> for the day you walked into my life and chose to stay."
+            <br><br>
+            <span style="font-family: 'Dancing Script'; font-size: clamp(2rem, 5vw, 3rem); display: block; margin-top: 30px; color: var(--rose);">Yours Forever & Always ❤️</span>
+        </p>
+    </div>
+</div>
+
 <script>
-/* ================= AUDIO PLAYER ================= */
+/* AUDIO LOGIC */
 const audio = document.getElementById("mainAudio");
 const seekBar = document.getElementById("seekBar");
 const playBtn = document.getElementById("playBtn");
@@ -299,99 +269,71 @@ const player = document.getElementById("musicPlayer");
 let currentSong = null;
 
 function playSong(path, element){
-if(currentSong === path){
-togglePlay();
-return;
-}
-currentSong = path;
-audio.src = path;
-audio.play()
-.then(()=>{
-player.style.display = "block";
-songTitle.innerText = element.innerText.replace("▶","").trim();
-playBtn.innerText = "⏸ Pause";
-})
-.catch(err=>{
-alert("Audio failed to load. Check songs folder name!");
-});
+    if(currentSong === path){ togglePlay(); return; }
+    currentSong = path;
+    audio.src = path;
+    audio.play().then(()=>{
+        player.style.display = "block";
+        songTitle.innerText = element.innerText.replace("▶","").trim();
+        playBtn.innerText = "⏸ Pause";
+    }).catch(err=>alert("Check songs folder!"));
 }
 
 function togglePlay(){
-if(!audio.src) return;
-if(audio.paused){
-audio.play();
-playBtn.innerText="⏸ Pause";
-}else{
-audio.pause();
-playBtn.innerText="▶ Play";
-}
+    if(!audio.src) return;
+    if(audio.paused){ audio.play(); playBtn.innerText="⏸ Pause"; }
+    else { audio.pause(); playBtn.innerText="▶ Play"; }
 }
 
 audio.addEventListener("timeupdate",()=>{
-if(!audio.duration) return;
-seekBar.max = audio.duration;
-seekBar.value = audio.currentTime;
-document.getElementById("currentTime").innerText = formatTime(audio.currentTime);
-document.getElementById("duration").innerText = formatTime(audio.duration);
+    if(!audio.duration) return;
+    seekBar.max = audio.duration;
+    seekBar.value = audio.currentTime;
 });
 
-seekBar.addEventListener("input",()=>{
-audio.currentTime = seekBar.value;
-});
+seekBar.addEventListener("input",()=>{ audio.currentTime = seekBar.value; });
 
-function formatTime(t){
-let m = Math.floor(t/60);
-let s = Math.floor(t%60);
-if(s<10) s="0"+s;
-return m+":"+s;
-}
-
-audio.addEventListener("ended",()=>{
-playBtn.innerText="▶ Play";
-seekBar.value=0;
-});
-
-/* ================= HEARTS ================= */
+/* HEARTS LOGIC (Optimized for Android stability) */
 function spawnHeart(){
-const h=document.createElement('div');
-h.innerHTML=['❤️','💖','💝','💕','🌹'][Math.floor(Math.random()*5)];
-h.style.position='absolute'; // Changed from fixed to absolute within container
-h.style.left=Math.random()*100+'%';
-h.style.top='105%'; // Start below the container
-h.style.fontSize=(Math.random()*20+15)+'px';
-h.style.transition='transform 6s linear, opacity 2s';
-h.style.pointerEvents='none';
-document.getElementById('heartContainer').appendChild(h);
+    const container = document.getElementById('heartContainer');
+    const h = document.createElement('div');
+    h.innerHTML = ['❤️','💖','💝','💕','🌹'][Math.floor(Math.random()*5)];
+    h.style.position = 'absolute';
+    h.style.left = Math.random() * 100 + 'vw';
+    h.style.top = '100vh'; // Always start at the true bottom of the view
+    h.style.fontSize = (Math.random()*20+15)+'px';
+    h.style.transition = 'transform 6s linear, opacity 2s';
+    container.appendChild(h);
 
-setTimeout(()=>{
-h.style.transform='translateY(-115vh)';
-h.style.opacity='0';
-},100);
-
-setTimeout(()=>h.remove(),7000);
+    setTimeout(()=>{
+        h.style.transform = 'translateY(-110vh)';
+        h.style.opacity = '0';
+    }, 50);
+    setTimeout(()=>h.remove(), 7000);
 }
 
-setInterval(spawnHeart,400);
+setInterval(spawnHeart, 500);
 
-function createHeartBurst(e){
-for(let i=0;i<8;i++){
-const b=document.createElement('div');
-b.innerHTML='❤️';
-b.style.position='fixed';
-b.style.left=e.clientX+'px';
-b.style.top=e.clientY+'px';
-b.style.transition='all 1s ease-out';
-b.style.pointerEvents='none';
-b.style.zIndex='2001';
-document.body.appendChild(b);
-setTimeout(()=>{
-b.style.transform=`translate(${(Math.random()-0.5)*200}px, ${(Math.random()-0.5)*200}px) scale(0)`;
-b.style.opacity='0';
-},50);
-setTimeout(()=>b.remove(),1000);
-}
-}
+/* Touch Burst */
+document.addEventListener('touchstart', (e) => {
+    const touch = e.touches[0];
+    for(let i=0; i<6; i++){
+        const b = document.createElement('div');
+        b.innerHTML = '❤️';
+        b.style.position = 'fixed';
+        b.style.left = touch.clientX + 'px';
+        b.style.top = touch.clientY + 'px';
+        b.style.transition = 'all 0.8s ease-out';
+        b.style.pointerEvents = 'none';
+        b.style.zIndex = '3000';
+        document.body.appendChild(b);
+        setTimeout(()=>{
+            b.style.transform = `translate(${(Math.random()-0.5)*150}px, ${(Math.random()-0.5)*150}px) scale(0)`;
+            b.style.opacity = '0';
+        }, 50);
+        setTimeout(()=>b.remove(), 1000);
+    }
+});
 </script>
-
 </body>
 </html>
