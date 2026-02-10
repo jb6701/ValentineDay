@@ -3,11 +3,11 @@
 <head>
 <meta charset="UTF-8">
 
-<meta name="viewport"
-content="width=device-width,
-initial-scale=1,
-maximum-scale=1,
-user-scalable=no,
+<meta name="viewport" 
+content="width=device-width, 
+initial-scale=1, 
+maximum-scale=5, 
+user-scalable=yes, 
 viewport-fit=cover">
 
 <title>Our Forever Story ❤️</title>
@@ -24,28 +24,24 @@ box-sizing:border-box;
 -webkit-tap-highlight-color:transparent;
 }
 
-html, body {
-    width: 100%;
-    /* Remove fixed height and overflow-y: scroll */
-    height: auto; 
-    min-height: 100%;
-    /* Allow the browser to handle overflow naturally */
-    overflow-x: hidden; 
-    /* Remove touch-action as it can block native momentum scrolling */
-    touch-action: auto; 
-    -webkit-text-size-adjust: 100%;
+/* --- SCROLL FIX START --- */
+html {
+    height: -webkit-fill-available;
 }
 
 body {
+    width: 100%;
+    min-height: 100vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+    position: relative;
+    -webkit-overflow-scrolling: touch; /* Smooth scroll for iOS */
     font-family: 'Cormorant Garamond', serif;
     background: linear-gradient(135deg, #fffafa 0%, #ffe4e1 100%);
     color: #2d3436;
-    /* This ensures momentum scrolling on iOS and stability on Android */
-    -webkit-overflow-scrolling: touch; 
 }
+/* --- SCROLL FIX END --- */
 
-
-/* ✅ FIXED HEADER HEIGHT (NO MOBILE JUMP) */
 header {
     min-height: 100vh;
     display: flex;
@@ -55,8 +51,6 @@ header {
     text-align: center;
     padding: 20px;
     position: relative;
-    /* Ensure it doesn't clip the rest of the page */
-    overflow: visible; 
 }
 
 header::before{
@@ -208,7 +202,6 @@ line-height:1.6;
 <div id="heartContainer"></div>
 <audio id="mainAudio"></audio>
 
-<!-- ✅ ADD THIS MUSIC PLAYER HERE -->
 <div id="musicPlayer" style="
 max-width:700px;
 margin:20px auto;
@@ -217,6 +210,9 @@ background:white;
 border-radius:20px;
 box-shadow:0 10px 25px rgba(0,0,0,.08);
 display:none;
+position: sticky;
+top: 10px;
+z-index: 2000;
 ">
 
 <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;">
@@ -249,7 +245,6 @@ style="width:100%;margin-top:10px;cursor:pointer;">
 <div class="days-counter">1146 Days of Loving You ❤️</div>
 </header>
 
-<!-- MUSIC (ALL 10 SONGS INTACT) -->
 <section class="music-container">
 <h2 style="text-align:center;color:var(--deep-love)">🎵 Our Valentine Playlist</h2>
 <div class="playlist">
@@ -265,7 +260,6 @@ style="width:100%;margin-top:10px;cursor:pointer;">
 </div>
 </section>
 
-<!-- GALLERY (ALL 6 IMAGES INTACT) -->
 <section class="gallery-section">
 <div class="gallery-grid">
 <div class="memory-card"><img src="Images/Pic1.jpeg"><div class="memory-caption">My Sunshine ☀️</div></div>
@@ -290,9 +284,7 @@ style="width:100%;margin-top:10px;cursor:pointer;">
     </div>
 
 <script>
-
 /* ================= AUDIO PLAYER ================= */
-
 const audio = document.getElementById("mainAudio");
 const seekBar = document.getElementById("seekBar");
 const playBtn = document.getElementById("playBtn");
@@ -302,16 +294,12 @@ const player = document.getElementById("musicPlayer");
 let currentSong = null;
 
 function playSong(path, element){
-
-// SAME SONG → toggle
 if(currentSong === path){
 togglePlay();
 return;
 }
-
 currentSong = path;
 audio.src = path;
-
 audio.play()
 .then(()=>{
 player.style.display = "block";
@@ -321,15 +309,10 @@ playBtn.innerText = "⏸ Pause";
 .catch(err=>{
 alert("Audio failed to load. Check songs folder name!");
 });
-
 }
 
-/* PLAY / PAUSE */
-
 function togglePlay(){
-
 if(!audio.src) return;
-
 if(audio.paused){
 audio.play();
 playBtn.innerText="⏸ Pause";
@@ -337,31 +320,19 @@ playBtn.innerText="⏸ Pause";
 audio.pause();
 playBtn.innerText="▶ Play";
 }
-
 }
 
-/* SLIDER */
-
 audio.addEventListener("timeupdate",()=>{
-
 if(!audio.duration) return;
-
 seekBar.max = audio.duration;
 seekBar.value = audio.currentTime;
-
-document.getElementById("currentTime").innerText =
-formatTime(audio.currentTime);
-
-document.getElementById("duration").innerText =
-formatTime(audio.duration);
-
+document.getElementById("currentTime").innerText = formatTime(audio.currentTime);
+document.getElementById("duration").innerText = formatTime(audio.duration);
 });
 
 seekBar.addEventListener("input",()=>{
 audio.currentTime = seekBar.value;
 });
-
-/* FORMAT TIME */
 
 function formatTime(t){
 let m = Math.floor(t/60);
@@ -376,58 +347,43 @@ seekBar.value=0;
 });
 
 /* ================= HEARTS ================= */
-
 function spawnHeart(){
-
 const h=document.createElement('div');
-
-h.innerHTML=['❤️','💖','💝','💕','🌹']
-[Math.floor(Math.random()*5)];
-
+h.innerHTML=['❤️','💖','💝','💕','🌹'][Math.floor(Math.random()*5)];
 h.style.position='fixed';
 h.style.left=Math.random()*100+'vw';
 h.style.top=window.innerHeight+'px';
 h.style.fontSize=(Math.random()*20+15)+'px';
 h.style.transition='transform 6s linear, opacity 2s';
-
+h.style.pointerEvents='none';
 document.getElementById('heartContainer').appendChild(h);
-
 setTimeout(()=>{
 h.style.transform='translateY(-120vh)';
 h.style.opacity='0';
 },100);
-
 setTimeout(()=>h.remove(),7000);
 }
 
 setInterval(spawnHeart,400);
 
 function createHeartBurst(e){
-
 for(let i=0;i<8;i++){
-
 const b=document.createElement('div');
 b.innerHTML='❤️';
 b.style.position='fixed';
 b.style.left=e.clientX+'px';
 b.style.top=e.clientY+'px';
 b.style.transition='all 1s ease-out';
-
+b.style.pointerEvents='none';
 document.body.appendChild(b);
-
 setTimeout(()=>{
-b.style.transform=`translate(${(Math.random()-0.5)*200}px,
-${(Math.random()-0.5)*200}px) scale(0)`;
+b.style.transform=`translate(${(Math.random()-0.5)*200}px, ${(Math.random()-0.5)*200}px) scale(0)`;
 b.style.opacity='0';
 },50);
-
 setTimeout(()=>b.remove(),1000);
 }
-
 }
-
 </script>
-
 
 </body>
 </html>
